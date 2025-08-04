@@ -291,9 +291,9 @@ If you use this simulator in your research, please cite:
 ```bibtex
 @software{memristor_nn_sim2025,
   title={Memristor-NN-Simulator: Device-Accurate Simulation and RTL Generation for Memristive Neural Accelerators},
-  author={Your Name},
+  author={Daniel Schmidt},
   year={2025},
-  url={https://github.com/yourusername/Memristor-NN-Simulator}
+  url={https://github.com/danieleschmidt/Memristor-NN-Simulator}
 }
 
 @inproceedings{iedm2024calibration,
