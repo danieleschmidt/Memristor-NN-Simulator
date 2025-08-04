@@ -1,0 +1,75 @@
+version: '3.8'
+
+services:
+  # Development environment
+  memristor-dev:
+    build:
+      context: .
+      target: development
+    volumes:
+      - .:/app
+      - memristor-cache:/app/cache
+    environment:
+      - MEMRISTOR_LOG_LEVEL=DEBUG
+      - MEMRISTOR_CACHE_DIR=/app/cache
+    ports:
+      - "8888:8888"  # For Jupyter if needed
+    command: bash
+
+  # Production environment
+  memristor-prod:
+    build:
+      context: .
+      target: production
+    volumes:
+      - memristor-cache:/app/cache
+    environment:
+      - MEMRISTOR_LOG_LEVEL=INFO
+      - MEMRISTOR_CACHE_DIR=/app/cache
+    restart: unless-stopped
+
+  # Benchmark/testing environment
+  memristor-benchmark:
+    build:
+      context: .
+      target: benchmark
+    volumes:
+      - ./results:/app/results
+      - memristor-cache:/app/cache
+    environment:
+      - MEMRISTOR_LOG_LEVEL=INFO
+      - MEMRISTOR_CACHE_DIR=/app/cache
+    command: python -c "
+      from memristor_nn.optimization import BenchmarkSuite;
+      suite = BenchmarkSuite();
+      results = suite.benchmark_crossbar_operations([(64, 64), (128, 128), (256, 256)]);
+      report = suite.generate_benchmark_report('/app/results/benchmark_report.md');
+      print('Benchmark completed');
+      "
+
+  # Monitoring stack (optional)
+  prometheus:
+    image: prom/prometheus:latest
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./monitoring/prometheus.yml:/etc/prometheus/prometheus.yml
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--web.console.libraries=/etc/prometheus/console_libraries'
+      - '--web.console.templates=/etc/prometheus/consoles'
+
+  grafana:
+    image: grafana/grafana:latest
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+    volumes:
+      - grafana-storage:/var/lib/grafana
+      - ./monitoring/grafana-datasources.yml:/etc/grafana/provisioning/datasources/datasources.yml
+
+volumes:
+  memristor-cache:
+  grafana-storage:
