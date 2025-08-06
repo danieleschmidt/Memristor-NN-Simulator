@@ -9,24 +9,41 @@ __version__ = "0.1.0"
 __author__ = "Daniel Schmidt"
 __email__ = "daniel@terragonlabs.com"
 
-from .core.crossbar import CrossbarArray
+# Core device models (torch-independent)
 from .core.device_models import DeviceModel, DeviceConfig
-from .mapping.neural_mapper import map_to_crossbar
-from .simulator.simulator import simulate
-from .rtl_gen.generator import RTLGenerator, ChiselGenerator
-from .analysis.explorer import DesignSpaceExplorer
-from .validation.validator import HardwareValidator
-from .faults.analyzer import FaultAnalyzer
+
+# Optional imports for testing without torch
+try:
+    from .core.crossbar import CrossbarArray
+    from .mapping.neural_mapper import map_to_crossbar
+    from .simulator.simulator import simulate
+    from .rtl_gen.generator import RTLGenerator, ChiselGenerator
+    from .analysis.explorer import DesignSpaceExplorer
+    from .validation.validator import HardwareValidator
+    from .faults.analyzer import FaultAnalyzer
+    TORCH_AVAILABLE = True
+except ImportError:
+    CrossbarArray = None
+    map_to_crossbar = None  
+    simulate = None
+    RTLGenerator = None
+    ChiselGenerator = None
+    DesignSpaceExplorer = None
+    HardwareValidator = None
+    FaultAnalyzer = None
+    TORCH_AVAILABLE = False
 
 __all__ = [
-    "CrossbarArray",
     "DeviceModel", 
     "DeviceConfig",
-    "map_to_crossbar",
-    "simulate",
     "RTLGenerator",
     "ChiselGenerator", 
     "DesignSpaceExplorer",
     "HardwareValidator",
     "FaultAnalyzer",
+    "TORCH_AVAILABLE",
 ]
+
+# Add torch-dependent items if available
+if TORCH_AVAILABLE:
+    __all__.extend(["CrossbarArray", "map_to_crossbar", "simulate"])
