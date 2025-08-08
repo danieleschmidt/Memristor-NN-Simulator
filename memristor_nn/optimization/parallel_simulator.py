@@ -13,7 +13,8 @@ import threading
 
 from ..simulator.simulator import SimulationResults, simulate
 from ..mapping.neural_mapper import MappedModel
-from ..utils.logger import get_logger
+from ..utils.logger import get_logger, PerformanceLogger
+from ..utils.error_handling import retry, CircuitBreaker, collect_errors, error_context
 from .cache_manager import get_global_cache
 
 
