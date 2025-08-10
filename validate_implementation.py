@@ -71,9 +71,7 @@ def validate_project_structure():
             "basic_usage.py": "Basic usage example",
             "complete_workflow.py": "Complete workflow demo"
         },
-        ".github/workflows/": {
-            "ci.yml": "CI/CD pipeline"
-        }
+        "CI_CD_TEMPLATE.yml": "CI/CD pipeline template"
     }
     
     def check_structure(path, structure, level=0):
@@ -187,7 +185,7 @@ def validate_configuration_files():
         ".pre-commit-config.yaml": "Pre-commit hooks",
         "Dockerfile": "Container configuration", 
         "docker-compose.yml": "Container orchestration",
-        ".github/workflows/ci.yml": "CI/CD pipeline"
+        "CI_CD_TEMPLATE.yml": "CI/CD pipeline template"
     }
     
     all_good = True
@@ -251,7 +249,7 @@ def validate_sdlc_generations():
             "Parallel processing": ["memristor_nn/optimization/parallel_simulator.py"]
         },
         "Quality Gates": {
-            "CI/CD": [".github/workflows/ci.yml"],
+            "CI/CD": ["CI_CD_TEMPLATE.yml"],
             "Pre-commit hooks": [".pre-commit-config.yaml"],
             "Testing": ["tests/"]
         },

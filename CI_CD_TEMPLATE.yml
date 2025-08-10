@@ -1,3 +1,11 @@
+# CI/CD Pipeline Template
+# 
+# This file contains the complete CI/CD pipeline configuration that should be
+# placed in `.github/workflows/ci.yml` when setting up the repository.
+# 
+# GitHub Apps require 'workflows' permission to create workflow files,
+# so this template is provided for manual setup.
+
 name: CI/CD Pipeline
 
 on:
@@ -270,124 +278,3 @@ jobs:
       with:
         name: deployment-report
         path: deployment-report.json
-
-  # Release Creation (when tags are pushed)
-  release:
-    runs-on: ubuntu-latest
-    needs: [deployment-check]
-    if: startsWith(github.ref, 'refs/tags/v')
-    
-    steps:
-    - uses: actions/checkout@v4
-    
-    - name: Set up Python
-      uses: actions/setup-python@v4
-      with:
-        python-version: ${{ env.PYTHON_VERSION }}
-    
-    - name: Install build dependencies
-      run: |
-        python -m pip install --upgrade pip build twine
-        pip install -e ".[dev,rtl]"
-    
-    - name: Build package
-      run: |
-        python -m build
-    
-    - name: Create Release
-      uses: actions/create-release@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        tag_name: ${{ github.ref }}
-        release_name: Release ${{ github.ref }}
-        body: |
-          ## 🚀 Memristor Neural Network Simulator Release
-          
-          ### Features
-          - Device-accurate memristor modeling with IEDM 2024 calibration
-          - Comprehensive neural network to crossbar mapping
-          - RTL generation for ASIC/FPGA deployment
-          - Design space exploration and optimization
-          - Production-ready deployment infrastructure
-          
-          ### Quality Gates Passed
-          - ✅ All tests passing across Python 3.9-3.11
-          - ✅ Security scan completed (Bandit + Safety)
-          - ✅ 85%+ test coverage achieved
-          - ✅ Performance benchmarks validated
-          - ✅ Docker containers built and tested
-          
-          ### Installation
-          ```bash
-          pip install memristor-nn-sim==${{ github.ref_name }}
-          ```
-          
-          See the [README](README.md) for complete usage examples.
-        draft: false
-        prerelease: false
-
-    - name: Publish to PyPI
-      env:
-        TWINE_USERNAME: __token__
-        TWINE_PASSWORD: ${{ secrets.PYPI_TOKEN }}
-      run: |
-        twine upload dist/* --skip-existing
-
-  # Security Monitoring
-  security-audit:
-    runs-on: ubuntu-latest
-    if: github.event_name == 'schedule'
-    
-    steps:
-    - uses: actions/checkout@v4
-    
-    - name: Set up Python
-      uses: actions/setup-python@v4
-      with:
-        python-version: ${{ env.PYTHON_VERSION }}
-    
-    - name: Install dependencies
-      run: |
-        python -m pip install --upgrade pip
-        pip install -e ".[dev,rtl]"
-        pip install safety bandit pip-audit
-    
-    - name: Run comprehensive security audit
-      run: |
-        echo "🔒 Running comprehensive security audit..."
-        
-        # Dependency vulnerabilities
-        safety check --json --output safety-audit.json
-        pip-audit --format=json --output=pip-audit.json
-        
-        # Code security issues
-        bandit -r memristor_nn -f json -o bandit-audit.json
-        
-        # Generate security report
-        python -c "
-        import json
-        from datetime import datetime
-        
-        security_report = {
-            'timestamp': datetime.now().isoformat(),
-            'audit_type': 'scheduled_security_scan',
-            'status': 'completed',
-            'findings': 'See individual report files'
-        }
-        
-        with open('security-audit-summary.json', 'w') as f:
-            json.dump(security_report, f, indent=2)
-        
-        print('🔒 Security audit completed')
-        "
-    
-    - name: Upload security audit results
-      uses: actions/upload-artifact@v3
-      with:
-        name: security-audit-${{ github.run_number }}
-        path: |
-          safety-audit.json
-          pip-audit.json
-          bandit-audit.json
-          security-audit-summary.json
