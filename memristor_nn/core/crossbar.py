@@ -2,7 +2,15 @@
 
 from typing import Tuple, Optional, Union, List
 import numpy as np
-import torch
+
+# Optional torch import
+try:
+    import torch
+    TORCH_AVAILABLE = True
+except ImportError:
+    TORCH_AVAILABLE = False
+    torch = None
+
 from .device_models import DeviceModel, DeviceConfig, create_device
 from ..utils.logger import LoggingMixin, PerformanceLogger
 from ..utils.validators import (
