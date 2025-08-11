@@ -1,6 +1,13 @@
 """Input validation and sanitization utilities."""
 
-import torch
+# Optional torch import
+try:
+    import torch
+    TORCH_AVAILABLE = True
+except ImportError:
+    TORCH_AVAILABLE = False
+    torch = None
+
 import numpy as np
 from typing import Union, Tuple, Optional, Any, List
 from pathlib import Path
@@ -13,15 +20,15 @@ class ValidationError(Exception):
 
 
 def validate_tensor(
-    tensor: torch.Tensor,
+    tensor,  # Union[torch.Tensor, Any] - can't type hint if torch not available
     expected_shape: Optional[Tuple[int, ...]] = None,
     min_dims: Optional[int] = None,
     max_dims: Optional[int] = None,
-    dtype: Optional[torch.dtype] = None,
+    dtype: Optional[Any] = None,  # torch.dtype if available
     min_value: Optional[float] = None,
     max_value: Optional[float] = None,
     name: str = "tensor"
-) -> torch.Tensor:
+):
     """
     Comprehensive tensor validation.
     
@@ -41,6 +48,9 @@ def validate_tensor(
     Raises:
         ValidationError: If validation fails
     """
+    if not TORCH_AVAILABLE:
+        raise ValidationError("PyTorch not available - cannot validate tensors")
+    
     if not isinstance(tensor, torch.Tensor):
         raise ValidationError(f"{name} must be a torch.Tensor, got {type(tensor)}")
     
