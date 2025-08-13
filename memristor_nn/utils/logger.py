@@ -129,10 +129,21 @@ class PerformanceLogger:
             duration = datetime.now() - self.start_time
             duration_ms = duration.total_seconds() * 1000
             
+            # Store metrics for retrieval
+            self._metrics = {
+                'duration_ms': duration_ms,
+                'success': exc_type is None,
+                'operation': self.operation_name
+            }
+            
             if exc_type:
                 self.logger.error(f"{self.operation_name} failed after {duration_ms:.2f}ms: {exc_val}")
             else:
                 self.logger.info(f"{self.operation_name} completed in {duration_ms:.2f}ms")
+    
+    def get_metrics(self) -> dict:
+        """Get performance metrics from the last execution."""
+        return getattr(self, '_metrics', {'duration_ms': 0, 'success': False, 'operation': self.operation_name})
 
 
 def log_system_info(logger: Optional[logging.Logger] = None) -> None:
