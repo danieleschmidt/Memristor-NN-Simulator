@@ -9,8 +9,28 @@ This example demonstrates the core functionality of the simulator:
 5. Fault injection analysis
 """
 
-import torch
-import torch.nn as nn
+try:
+    import torch
+    import torch.nn as nn
+    TORCH_AVAILABLE = True
+except ImportError:
+    # Mock torch functionality for demonstration
+    TORCH_AVAILABLE = False
+    print("WARNING: PyTorch not available. Running in simulation mode.")
+    
+    class MockTorch:
+        class nn:
+            class Sequential:
+                def __init__(self, *layers): self.layers = layers
+            class Linear:
+                def __init__(self, in_features, out_features): 
+                    self.in_features, self.out_features = in_features, out_features
+            class ReLU:
+                def __init__(self): pass
+    
+    torch = MockTorch()
+    nn = torch.nn
+
 import numpy as np
 import matplotlib.pyplot as plt
 
@@ -19,6 +39,15 @@ import memristor_nn as mn
 
 def create_simple_mlp():
     """Create a simple Multi-Layer Perceptron for demonstration."""
+    if not TORCH_AVAILABLE:
+        print("Creating mock MLP model for demonstration")
+        class MockModel:
+            def __init__(self):
+                self.layers = [nn.Linear(784, 256), nn.ReLU(), nn.Linear(256, 128), nn.ReLU(), nn.Linear(128, 10)]
+            def parameters(self):
+                return []
+        return MockModel()
+    
     model = nn.Sequential(
         nn.Linear(784, 256),
         nn.ReLU(),
