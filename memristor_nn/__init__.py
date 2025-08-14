@@ -9,8 +9,14 @@ __version__ = "0.1.0"
 __author__ = "Daniel Schmidt"
 __email__ = "daniel@terragonlabs.com"
 
-# Core device models (torch-independent)
-from .core.device_models import DeviceModel, DeviceConfig
+# Optional imports for testing without external dependencies
+try:
+    from .core.device_models import DeviceModel, DeviceConfig
+    CORE_AVAILABLE = True
+except ImportError:
+    DeviceModel = None
+    DeviceConfig = None
+    CORE_AVAILABLE = False
 
 # Optional imports for testing without torch
 try:
@@ -34,15 +40,18 @@ except ImportError:
     TORCH_AVAILABLE = False
 
 __all__ = [
-    "DeviceModel", 
-    "DeviceConfig",
     "RTLGenerator",
     "ChiselGenerator", 
     "DesignSpaceExplorer",
     "HardwareValidator",
     "FaultAnalyzer",
     "TORCH_AVAILABLE",
+    "CORE_AVAILABLE",
 ]
+
+# Add core items if available
+if CORE_AVAILABLE:
+    __all__.extend(["DeviceModel", "DeviceConfig"])
 
 # Add torch-dependent items if available
 if TORCH_AVAILABLE:
