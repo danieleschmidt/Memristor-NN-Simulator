@@ -1,0 +1,51 @@
+{
+  "overall_passed": false,
+  "quality_score": 0.7581040564373898,
+  "quality_grade": "C",
+  "total_execution_time": 0.023131608963012695,
+  "gate_results": [
+    {
+      "name": "SECURITY",
+      "passed": false,
+      "score": 0.5,
+      "execution_time": 0.013550758361816406,
+      "details": {
+        "issues_found": 13,
+        "files_scanned": 54
+      },
+      "error_message": "Found 13 security issues",
+      "recommendations": [
+        "Review and fix security issues"
+      ]
+    },
+    {
+      "name": "CODE_QUALITY",
+      "passed": false,
+      "score": 0.8457407407407407,
+      "execution_time": 0.006183624267578125,
+      "details": {
+        "total_files": 54,
+        "avg_file_length": 333.8888888888889,
+        "long_files": 13
+      },
+      "error_message": null,
+      "recommendations": [
+        "Refactor very large files"
+      ]
+    },
+    {
+      "name": "TEST_COVERAGE",
+      "passed": true,
+      "score": 0.9285714285714286,
+      "execution_time": 0.003167390823364258,
+      "details": {
+        "test_files": 9,
+        "test_functions": 96,
+        "estimated_coverage": 0.8571428571428571,
+        "source_files": 35
+      },
+      "error_message": null,
+      "recommendations": []
+    }
+  ]
+}

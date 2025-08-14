@@ -4,16 +4,27 @@
 import sys
 import time
 import subprocess
+import argparse
 from pathlib import Path
 from typing import Dict, Any, List
 
 # Add current directory to Python path
 sys.path.insert(0, str(Path(__file__).parent))
 
-from memristor_nn.testing.comprehensive_test_suite import run_comprehensive_tests
-from memristor_nn.testing.performance_benchmarks import run_performance_benchmarks
-from memristor_nn.utils.security import SecurityError
-from memristor_nn.utils.error_handling import get_error_collector
+try:
+    from memristor_nn.quality.progressive_gates import run_generation_quality_gates
+    PROGRESSIVE_GATES_AVAILABLE = True
+except ImportError:
+    PROGRESSIVE_GATES_AVAILABLE = False
+
+try:
+    from memristor_nn.testing.comprehensive_test_suite import run_comprehensive_tests
+    from memristor_nn.testing.performance_benchmarks import run_performance_benchmarks
+    from memristor_nn.utils.security import SecurityError
+    from memristor_nn.utils.error_handling import get_error_collector
+    LEGACY_GATES_AVAILABLE = True
+except ImportError:
+    LEGACY_GATES_AVAILABLE = False
 
 
 class QualityGate:
@@ -441,8 +452,94 @@ def run_quality_gates() -> Dict[str, Any]:
     return summary
 
 
+def run_progressive_quality_gates(generation: str = "Generation 1") -> Dict[str, Any]:
+    """Run new progressive quality gates system."""
+    if not PROGRESSIVE_GATES_AVAILABLE:
+        print("❌ Progressive quality gates not available. Using legacy system.")
+        return run_quality_gates()
+    
+    print(f"🚀 Running Progressive Quality Gates for {generation}")
+    print("=" * 60)
+    
+    try:
+        report = run_generation_quality_gates(generation)
+        
+        # Convert to legacy format for compatibility
+        results = {
+            'overall_passed': report.overall_passed,
+            'quality_score': report.quality_score,
+            'quality_grade': report.grade,
+            'total_execution_time': report.execution_time,
+            'gate_results': [
+                {
+                    'name': r.gate_name,
+                    'passed': r.passed,
+                    'score': r.score,
+                    'execution_time': r.execution_time,
+                    'error_message': r.error_message
+                }
+                for r in report.gate_results
+            ],
+            'critical_issues': report.critical_issues,
+            'recommendations': report.recommendations
+        }
+        
+        # Print summary
+        print(f"\n🎯 Progressive Quality Gates Results")
+        print(f"Generation: {generation}")
+        print(f"Overall Status: {'✅ PASS' if report.overall_passed else '❌ FAIL'}")
+        print(f"Quality Score: {report.quality_score:.3f}/1.000")
+        print(f"Quality Grade: {report.grade}")
+        print(f"Execution Time: {report.execution_time:.1f}s")
+        
+        if report.critical_issues:
+            print(f"\n⚠️ Critical Issues ({len(report.critical_issues)}):")
+            for issue in report.critical_issues:
+                print(f"  • {issue}")
+        
+        if report.recommendations:
+            print(f"\n💡 Recommendations ({len(report.recommendations)}):")
+            for rec in report.recommendations[:5]:  # Show top 5
+                print(f"  • {rec}")
+            if len(report.recommendations) > 5:
+                print(f"  ... and {len(report.recommendations) - 5} more")
+        
+        print(f"\n📊 Gate Details:")
+        for result in report.gate_results:
+            status = "✅" if result.passed else "❌"
+            print(f"  {status} {result.gate_name}: {result.score:.2f} ({result.execution_time:.1f}s)")
+            if result.error_message:
+                print(f"      Error: {result.error_message}")
+        
+        return results
+        
+    except Exception as e:
+        print(f"❌ Progressive quality gates failed: {e}")
+        print("🔄 Falling back to legacy quality gates...")
+        return run_quality_gates()
+
+
 if __name__ == "__main__":
-    results = run_quality_gates()
+    parser = argparse.ArgumentParser(description="Run quality gates for memristor neural network simulator")
+    parser.add_argument("--generation", default="Generation 1", 
+                       choices=["Generation 1", "Generation 2", "Generation 3"],
+                       help="SDLC generation to run quality gates for")
+    parser.add_argument("--progressive", action="store_true",
+                       help="Use progressive quality gates system")
+    parser.add_argument("--legacy", action="store_true", 
+                       help="Use legacy quality gates system")
+    
+    args = parser.parse_args()
+    
+    # Determine which system to use
+    if args.legacy or not PROGRESSIVE_GATES_AVAILABLE:
+        print("Running legacy quality gates system...")
+        results = run_quality_gates()
+    else:
+        print(f"Running progressive quality gates for {args.generation}...")
+        results = run_progressive_quality_gates(args.generation)
     
     # Exit with appropriate code
-    sys.exit(0 if results['overall_passed'] else 1)
+    exit_code = 0 if results['overall_passed'] else 1
+    print(f"\n🏁 Quality gates {'PASSED' if exit_code == 0 else 'FAILED'}")
+    sys.exit(exit_code)
