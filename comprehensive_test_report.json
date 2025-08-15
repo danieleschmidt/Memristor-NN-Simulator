@@ -1,0 +1,356 @@
+{
+  "overall": {
+    "total_tests": 18,
+    "passed_tests": 14,
+    "failed_tests": 4,
+    "pass_rate": 0.7777777777777778,
+    "total_duration_ms": 3653.3873081207275,
+    "avg_test_duration_ms": 202.96596156226263
+  },
+  "by_category": {
+    "Unit Tests": {
+      "passed": 5,
+      "total": 7,
+      "pass_rate": 0.7142857142857143,
+      "duration_ms": 12.701272964477539
+    },
+    "Integration Tests": {
+      "passed": 2,
+      "total": 2,
+      "pass_rate": 1.0,
+      "duration_ms": 920.9637641906738
+    },
+    "Performance Tests": {
+      "passed": 3,
+      "total": 3,
+      "pass_rate": 1.0,
+      "duration_ms": 1779.8137664794922
+    },
+    "Statistical Tests": {
+      "passed": 1,
+      "total": 2,
+      "pass_rate": 0.5,
+      "duration_ms": 422.0161437988281
+    },
+    "Robustness Tests": {
+      "passed": 2,
+      "total": 2,
+      "pass_rate": 1.0,
+      "duration_ms": 516.2019729614258
+    },
+    "Research Validation": {
+      "passed": 1,
+      "total": 2,
+      "pass_rate": 0.5,
+      "duration_ms": 1.6903877258300781
+    }
+  },
+  "detailed_results": [
+    {
+      "test_name": "TaOx_device_basic",
+      "passed": true,
+      "duration_ms": 0.2181529998779297,
+      "error_message": null,
+      "performance_metrics": {
+        "conductance": 5.2406580377430644e-05,
+        "new_state": 0.7503241057003619
+      }
+    },
+    {
+      "test_name": "HfOx_device_basic",
+      "passed": true,
+      "duration_ms": 0.03719329833984375,
+      "error_message": null,
+      "performance_metrics": {
+        "low_v_conductance": 0.000505,
+        "high_v_conductance": 0.0006030156455979589
+      }
+    },
+    {
+      "test_name": "device_configuration",
+      "passed": true,
+      "duration_ms": 0.17333030700683594,
+      "error_message": null,
+      "performance_metrics": {
+        "variation_std": 3.914334651744297e-05
+      }
+    },
+    {
+      "test_name": "simple_crossbar",
+      "passed": false,
+      "duration_ms": 6.0443878173828125,
+      "error_message": "",
+      "performance_metrics": null
+    },
+    {
+      "test_name": "robust_crossbar",
+      "passed": false,
+      "duration_ms": 1.1820793151855469,
+      "error_message": "'RobustCrossbarArray' object has no attribute 'matrix_vector_multiply_optimized'",
+      "performance_metrics": null
+    },
+    {
+      "test_name": "advanced_cache",
+      "passed": true,
+      "duration_ms": 0.19359588623046875,
+      "error_message": null,
+      "performance_metrics": {
+        "hit_rate": 0.5
+      }
+    },
+    {
+      "test_name": "optimized_crossbar",
+      "passed": true,
+      "duration_ms": 4.852533340454102,
+      "error_message": null,
+      "performance_metrics": {
+        "memory_mb": 0.001953125
+      }
+    },
+    {
+      "test_name": "complete_inference_pipeline",
+      "passed": true,
+      "duration_ms": 914.6103858947754,
+      "error_message": null,
+      "performance_metrics": {
+        "predicted_class": 3,
+        "confidence": 0.10777272003897452,
+        "output_range": [
+          1.5484798933850923e-05,
+          1.8409583939203543e-05
+        ]
+      }
+    },
+    {
+      "test_name": "fault_tolerance_workflow",
+      "passed": true,
+      "duration_ms": 6.3533782958984375,
+      "error_message": null,
+      "performance_metrics": {
+        "faults_detected": 3,
+        "reconfiguration_success": true,
+        "reconfigurations": 1
+      }
+    },
+    {
+      "test_name": "performance_small",
+      "passed": true,
+      "duration_ms": 3.5228729248046875,
+      "error_message": null,
+      "performance_metrics": {
+        "simple_time_ms": 2.0270347595214844,
+        "optimized_time_ms": 1.0704994201660156,
+        "speedup": 1.8935412026726057,
+        "regression": false
+      }
+    },
+    {
+      "test_name": "performance_medium",
+      "passed": true,
+      "duration_ms": 197.44539260864258,
+      "error_message": null,
+      "performance_metrics": {
+        "simple_time_ms": 160.24208068847656,
+        "optimized_time_ms": 36.06390953063965,
+        "speedup": 4.443280908087239,
+        "regression": false
+      }
+    },
+    {
+      "test_name": "performance_large",
+      "passed": true,
+      "duration_ms": 1578.845500946045,
+      "error_message": null,
+      "performance_metrics": {
+        "simple_time_ms": 1301.3737201690674,
+        "optimized_time_ms": 275.2089500427246,
+        "speedup": 4.728675139260684,
+        "regression": false
+      }
+    },
+    {
+      "test_name": "device_variation_statistics",
+      "passed": "True",
+      "duration_ms": 5.519628524780273,
+      "error_message": null,
+      "performance_metrics": {
+        "mean": 9.950390235695394e-05,
+        "std": 2.702773704097847e-05,
+        "coefficient_of_variation": 0.2716248951123635,
+        "reasonable_variation": "True",
+        "distribution_normal": "True"
+      }
+    },
+    {
+      "test_name": "crossbar_output_statistics",
+      "passed": "False",
+      "duration_ms": 416.49651527404785,
+      "error_message": null,
+      "performance_metrics": {
+        "output_consistency": 1.3886828158299906e-16,
+        "mean_output": 0.0015614828096472072,
+        "std_outputs": 2.168404344971009e-19
+      }
+    },
+    {
+      "test_name": "extreme_input_robustness",
+      "passed": true,
+      "duration_ms": 0.10180473327636719,
+      "error_message": null,
+      "performance_metrics": {
+        "all_valid": true
+      }
+    },
+    {
+      "test_name": "memory_limits_test",
+      "passed": true,
+      "duration_ms": 516.1001682281494,
+      "error_message": null,
+      "performance_metrics": {
+        "output_shape": [
+          256
+        ]
+      }
+    },
+    {
+      "test_name": "novel_switching_dynamics",
+      "passed": "False",
+      "duration_ms": 0.22268295288085938,
+      "error_message": null,
+      "performance_metrics": {
+        "switching_probability": 1.0,
+        "positive_evolution": "False",
+        "negative_evolution": "False"
+      }
+    },
+    {
+      "test_name": "adaptive_crossbar_architecture",
+      "passed": true,
+      "duration_ms": 1.4677047729492188,
+      "error_message": null,
+      "performance_metrics": {
+        "redundant_devices": 102,
+        "expected_redundant": 102,
+        "faults_detected": 0
+      }
+    }
+  ],
+  "performance_summary": {
+    "conductance": [
+      5.2406580377430644e-05
+    ],
+    "new_state": [
+      0.7503241057003619
+    ],
+    "low_v_conductance": [
+      0.000505
+    ],
+    "high_v_conductance": [
+      0.0006030156455979589
+    ],
+    "variation_std": [
+      3.914334651744297e-05
+    ],
+    "hit_rate": [
+      0.5
+    ],
+    "memory_mb": [
+      0.001953125
+    ],
+    "predicted_class": [
+      3
+    ],
+    "confidence": [
+      0.10777272003897452
+    ],
+    "output_range": [
+      [
+        1.5484798933850923e-05,
+        1.8409583939203543e-05
+      ]
+    ],
+    "faults_detected": [
+      3,
+      0
+    ],
+    "reconfiguration_success": [
+      true
+    ],
+    "reconfigurations": [
+      1
+    ],
+    "simple_time_ms": [
+      2.0270347595214844,
+      160.24208068847656,
+      1301.3737201690674
+    ],
+    "optimized_time_ms": [
+      1.0704994201660156,
+      36.06390953063965,
+      275.2089500427246
+    ],
+    "speedup": [
+      1.8935412026726057,
+      4.443280908087239,
+      4.728675139260684
+    ],
+    "regression": [
+      false,
+      false,
+      false
+    ],
+    "mean": [
+      9.950390235695394e-05
+    ],
+    "std": [
+      2.702773704097847e-05
+    ],
+    "coefficient_of_variation": [
+      0.2716248951123635
+    ],
+    "reasonable_variation": [
+      "True"
+    ],
+    "distribution_normal": [
+      "True"
+    ],
+    "output_consistency": [
+      1.3886828158299906e-16
+    ],
+    "mean_output": [
+      0.0015614828096472072
+    ],
+    "std_outputs": [
+      2.168404344971009e-19
+    ],
+    "all_valid": [
+      true
+    ],
+    "output_shape": [
+      [
+        256
+      ]
+    ],
+    "switching_probability": [
+      1.0
+    ],
+    "positive_evolution": [
+      "False"
+    ],
+    "negative_evolution": [
+      "False"
+    ],
+    "redundant_devices": [
+      102
+    ],
+    "expected_redundant": [
+      102
+    ]
+  },
+  "timestamp": 1755299308.4024074,
+  "test_environment": {
+    "implementations_available": true,
+    "python_version": "3.12.3 (main, Jun 18 2025, 17:59:45) [GCC 13.3.0]",
+    "numpy_version": "2.3.2"
+  }
+}

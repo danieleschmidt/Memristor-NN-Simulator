@@ -1,0 +1,91 @@
+{
+  "switching_models": {
+    "Traditional": {
+      "accuracy": 0.9602024845024231,
+      "latency_us": 12.609693739149305,
+      "energy_pj": 1.7762184143066405e-11,
+      "novel_contribution": "Novel switching dynamics with alpha=N/A"
+    },
+    "Novel_NonLinear": {
+      "accuracy": 0.9267297168942472,
+      "latency_us": 1828.2201555040147,
+      "energy_pj": 1.4506578445434574e-09,
+      "novel_contribution": "Novel switching dynamics with alpha=2.0"
+    },
+    "Novel_HighNL": {
+      "accuracy": 0.9768496338268916,
+      "latency_us": 1660.9827677408855,
+      "energy_pj": 6.459951400756837e-10,
+      "novel_contribution": "Novel switching dynamics with alpha=3.0"
+    },
+    "Novel_LowNoise": {
+      "accuracy": 0.9610421191679798,
+      "latency_us": 1280.7316250271267,
+      "energy_pj": 8.873542149861655e-10,
+      "novel_contribution": "Novel switching dynamics with alpha=1.5"
+    }
+  },
+  "architectures": {
+    "Standard_64x64": {
+      "accuracy": 0.9156325985194835,
+      "latency_us": 7156.085968017578,
+      "area_mm2": 4.096,
+      "fault_tolerance": 0.953201029166847,
+      "novel_contribution": "Adaptive architecture with 0.0% redundancy"
+    },
+    "Adaptive_64x64": {
+      "accuracy": 0.9124777106014448,
+      "latency_us": 7059.431076049805,
+      "area_mm2": 4.096,
+      "fault_tolerance": 0.9530654161486893,
+      "novel_contribution": "Adaptive architecture with 10.0% redundancy"
+    },
+    "HighRedundancy_64x64": {
+      "accuracy": 0.9091227677791172,
+      "latency_us": 7086.682319641113,
+      "area_mm2": 4.096,
+      "fault_tolerance": 0.9426598934494215,
+      "novel_contribution": "Adaptive architecture with 20.0% redundancy"
+    },
+    "Large_128x128": {
+      "accuracy": 0.8820032812425975,
+      "latency_us": 28538.44165802002,
+      "area_mm2": 16.384,
+      "fault_tolerance": 0.9538309310868893,
+      "novel_contribution": "Adaptive architecture with 10.0% redundancy"
+    }
+  },
+  "statistical_analysis": {
+    "accuracy_stats": {
+      "mean": 0.9305075390667731,
+      "std": 0.030274415961295358,
+      "range": [
+        0.8820032812425975,
+        0.9768496338268916
+      ]
+    },
+    "latency_stats": {
+      "mean": 6827.898157967462,
+      "std": 8663.782309229342,
+      "range": [
+        12.609693739149305,
+        28538.44165802002
+      ]
+    },
+    "energy_stats": {
+      "mean": 623.0080127719816,
+      "std": 904.9845750649616,
+      "range": [
+        1.7762184143066405e-11,
+        2853.844165802002
+      ]
+    },
+    "correlations": {
+      "accuracy_latency": -0.7910880666336301,
+      "accuracy_energy": -0.8073205536235014,
+      "latency_energy": 0.9970583890435775
+    }
+  },
+  "timestamp": 1755299156.7269063,
+  "research_phase": "Novel Algorithms and Comparative Studies"
+}
