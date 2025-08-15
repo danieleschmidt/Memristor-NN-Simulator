@@ -1,0 +1,291 @@
+{
+  "timestamp": "2025-08-15T20:36:58.065554",
+  "overall_status": "PASS",
+  "gates": {
+    "security": {
+      "status": "PASS",
+      "critical_issues": 0,
+      "warnings": 46,
+      "checks": [
+        {
+          "file": "/root/repo/autonomous_sdlc_orchestrator.py",
+          "issue": "Usage of potentially unsafe function: exec",
+          "severity": "MEDIUM"
+        },
+        {
+          "file": "/root/repo/deploy_production.py",
+          "issue": "Usage of potentially unsafe function: eval",
+          "severity": "MEDIUM"
+        },
+        {
+          "file": "/root/repo/performance_benchmark.py",
+          "issue": "Usage of potentially unsafe function: exec",
+          "severity": "MEDIUM"
+        },
+        {
+          "file": "/root/repo/research_algorithms.py",
+          "issue": "Usage of potentially unsafe function: exec",
+          "severity": "MEDIUM"
+        },
+        {
+          "file": "/root/repo/research_algorithms_clean.py",
+          "issue": "Usage of potentially unsafe function: exec",
+          "severity": "MEDIUM"
+        },
+        {
+          "file": "/root/repo/run_comprehensive_tests.py",
+          "issue": "Usage of potentially unsafe function: exec",
+          "severity": "MEDIUM"
+        },
+        {
+          "file": "/root/repo/run_quality_gates.py",
+          "issue": "Usage of potentially unsafe function: eval",
+          "severity": "MEDIUM"
+        },
+        {
+          "file": "/root/repo/run_quality_gates.py",
+          "issue": "Usage of potentially unsafe function: exec",
+          "severity": "MEDIUM"
+        },
+        {
+          "file": "/root/repo/run_quality_gates.py",
+          "issue": "Usage of potentially unsafe function: compile",
+          "severity": "MEDIUM"
+        },
+        {
+          "file": "/root/repo/run_quality_gates.py",
+          "issue": "Usage of potentially unsafe function: __import__",
+          "severity": "MEDIUM"
+        },
+        {
+          "file": "/root/repo/simple_quality_gates.py",
+          "issue": "Usage of potentially unsafe function: exec",
+          "severity": "MEDIUM"
+        },
+        {
+          "file": "/root/repo/test_minimal_core.py",
+          "issue": "Usage of potentially unsafe function: exec",
+          "severity": "MEDIUM"
+        },
+        {
+          "file": "/root/repo/test_progressive_gates_standalone.py",
+          "issue": "Usage of potentially unsafe function: exec",
+          "severity": "MEDIUM"
+        },
+        {
+          "file": "/root/repo/test_scaling_performance.py",
+          "issue": "Usage of potentially unsafe function: eval",
+          "severity": "MEDIUM"
+        },
+        {
+          "file": "/root/repo/test_scaling_performance.py",
+          "issue": "Usage of potentially unsafe function: exec",
+          "severity": "MEDIUM"
+        },
+        {
+          "file": "/root/repo/test_scaling_performance.py",
+          "issue": "Usage of potentially unsafe function: compile",
+          "severity": "MEDIUM"
+        },
+        {
+          "file": "/root/repo/validate_implementation.py",
+          "issue": "Usage of potentially unsafe function: exec",
+          "severity": "MEDIUM"
+        },
+        {
+          "file": "/root/repo/test_pipeline_guard_basic.py",
+          "issue": "Usage of potentially unsafe function: exec",
+          "severity": "MEDIUM"
+        },
+        {
+          "file": "/root/repo/test_core_only.py",
+          "issue": "Usage of potentially unsafe function: exec",
+          "severity": "MEDIUM"
+        },
+        {
+          "file": "/root/repo/examples/complete_workflow.py",
+          "issue": "Usage of potentially unsafe function: exec",
+          "severity": "MEDIUM"
+        },
+        {
+          "file": "/root/repo/tests/test_pipeline_guard.py",
+          "issue": "Usage of potentially unsafe function: eval",
+          "severity": "MEDIUM"
+        },
+        {
+          "file": "/root/repo/tests/test_pipeline_guard.py",
+          "issue": "Usage of potentially unsafe function: exec",
+          "severity": "MEDIUM"
+        },
+        {
+          "file": "/root/repo/memristor_nn/analysis/explorer.py",
+          "issue": "Usage of potentially unsafe function: eval",
+          "severity": "MEDIUM"
+        },
+        {
+          "file": "/root/repo/memristor_nn/analysis/explorer.py",
+          "issue": "Usage of potentially unsafe function: exec",
+          "severity": "MEDIUM"
+        },
+        {
+          "file": "/root/repo/memristor_nn/faults/analyzer.py",
+          "issue": "Usage of potentially unsafe function: eval",
+          "severity": "MEDIUM"
+        },
+        {
+          "file": "/root/repo/memristor_nn/optimization/memory_optimizer.py",
+          "issue": "Usage of potentially unsafe function: exec",
+          "severity": "MEDIUM"
+        },
+        {
+          "file": "/root/repo/memristor_nn/optimization/parallel_simulator.py",
+          "issue": "Usage of potentially unsafe function: exec",
+          "severity": "MEDIUM"
+        },
+        {
+          "file": "/root/repo/memristor_nn/optimization/performance_profiler.py",
+          "issue": "Usage of potentially unsafe function: exec",
+          "severity": "MEDIUM"
+        },
+        {
+          "file": "/root/repo/memristor_nn/optimization/scaling_manager.py",
+          "issue": "Usage of potentially unsafe function: exec",
+          "severity": "MEDIUM"
+        },
+        {
+          "file": "/root/repo/memristor_nn/optimization/self_improving_optimizer.py",
+          "issue": "Usage of potentially unsafe function: exec",
+          "severity": "MEDIUM"
+        },
+        {
+          "file": "/root/repo/memristor_nn/quality/progressive_gates.py",
+          "issue": "Usage of potentially unsafe function: exec",
+          "severity": "MEDIUM"
+        },
+        {
+          "file": "/root/repo/memristor_nn/research/benchmark_suite.py",
+          "issue": "Usage of potentially unsafe function: exec",
+          "severity": "MEDIUM"
+        },
+        {
+          "file": "/root/repo/memristor_nn/research/novel_algorithms.py",
+          "issue": "Usage of potentially unsafe function: eval",
+          "severity": "MEDIUM"
+        },
+        {
+          "file": "/root/repo/memristor_nn/testing/comprehensive_test_suite.py",
+          "issue": "Usage of potentially unsafe function: exec",
+          "severity": "MEDIUM"
+        },
+        {
+          "file": "/root/repo/memristor_nn/testing/performance_benchmarks.py",
+          "issue": "Usage of potentially unsafe function: exec",
+          "severity": "MEDIUM"
+        },
+        {
+          "file": "/root/repo/memristor_nn/utils/logger.py",
+          "issue": "Usage of potentially unsafe function: eval",
+          "severity": "MEDIUM"
+        },
+        {
+          "file": "/root/repo/memristor_nn/utils/logger.py",
+          "issue": "Usage of potentially unsafe function: exec",
+          "severity": "MEDIUM"
+        },
+        {
+          "file": "/root/repo/pipeline_guard/core/healing_engine.py",
+          "issue": "Usage of potentially unsafe function: exec",
+          "severity": "MEDIUM"
+        },
+        {
+          "file": "/root/repo/pipeline_guard/core/healing_engine.py",
+          "issue": "Usage of potentially unsafe function: compile",
+          "severity": "MEDIUM"
+        },
+        {
+          "file": "/root/repo/pipeline_guard/utils/error_handling.py",
+          "issue": "Usage of potentially unsafe function: exec",
+          "severity": "MEDIUM"
+        },
+        {
+          "file": "/root/repo/pipeline_guard/utils/security.py",
+          "issue": "Usage of potentially unsafe function: exec",
+          "severity": "MEDIUM"
+        },
+        {
+          "file": "/root/repo/pipeline_guard/utils/security.py",
+          "issue": "Usage of potentially unsafe function: compile",
+          "severity": "MEDIUM"
+        },
+        {
+          "file": "/root/repo/pipeline_guard/utils/validators.py",
+          "issue": "Usage of potentially unsafe function: compile",
+          "severity": "MEDIUM"
+        },
+        {
+          "file": "/root/repo/pipeline_guard/scaling/auto_scaler.py",
+          "issue": "Usage of potentially unsafe function: eval",
+          "severity": "MEDIUM"
+        },
+        {
+          "file": "/root/repo/pipeline_guard/scaling/auto_scaler.py",
+          "issue": "Usage of potentially unsafe function: exec",
+          "severity": "MEDIUM"
+        },
+        {
+          "file": "/root/repo/pipeline_guard/scaling/performance_monitor.py",
+          "issue": "Usage of potentially unsafe function: eval",
+          "severity": "MEDIUM"
+        }
+      ]
+    },
+    "performance": {
+      "status": "PASS",
+      "benchmarks": {
+        "pipeline_registration_1000": {
+          "duration_seconds": 0.002770662307739258,
+          "rate_per_second": 360924.53317270457,
+          "threshold": 10.0,
+          "status": "PASS"
+        },
+        "failure_detection_500": {
+          "duration_seconds": 0.030922889709472656,
+          "rate_per_second": 16169.252120277564,
+          "threshold": 5.0,
+          "status": "PASS"
+        },
+        "healing_execution_50": {
+          "duration_seconds": 1.0248496532440186,
+          "rate_per_second": 48.7876439648801,
+          "threshold": 30.0,
+          "status": "PASS"
+        }
+      },
+      "issues": []
+    },
+    "code_quality": {
+      "status": "PASS",
+      "metrics": {
+        "total_lines": 20452,
+        "total_files": 65,
+        "average_lines_per_file": 314.6461538461538,
+        "large_files": 1,
+        "documentation_percentage": 87.6923076923077,
+        "quality_score": 0.8999999999999999
+      },
+      "issues": []
+    },
+    "test_coverage": {
+      "status": "PASS",
+      "coverage_percentage": 85.5,
+      "tests_run": 1,
+      "tests_passed": 1,
+      "issues": []
+    }
+  },
+  "summary": {
+    "total_gates": 4,
+    "passed_gates": 4,
+    "failed_gates": 0
+  }
+}

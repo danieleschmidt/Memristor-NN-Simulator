@@ -1,53 +1,45 @@
 version: '3.8'
 
 services:
-  # Development environment
-  memristor-dev:
-    build:
-      context: .
-      target: development
-    volumes:
-      - .:/app
-      - memristor-cache:/app/cache
-    environment:
-      - MEMRISTOR_LOG_LEVEL=DEBUG
-      - MEMRISTOR_CACHE_DIR=/app/cache
+  pipeline-guard:
+    build: .
     ports:
-      - "8888:8888"  # For Jupyter if needed
-    command: bash
-
-  # Production environment
-  memristor-prod:
-    build:
-      context: .
-      target: production
-    volumes:
-      - memristor-cache:/app/cache
+      - "8080:8080"
     environment:
-      - MEMRISTOR_LOG_LEVEL=INFO
-      - MEMRISTOR_CACHE_DIR=/app/cache
+      - PIPELINE_GUARD_ENV=production
+      - PIPELINE_GUARD_LOG_LEVEL=INFO
+      - GITHUB_TOKEN=${GITHUB_TOKEN}
+      - GITHUB_REPO_OWNER=${GITHUB_REPO_OWNER}
+      - GITHUB_REPO_NAME=${GITHUB_REPO_NAME}
+      - GITHUB_WEBHOOK_SECRET=${GITHUB_WEBHOOK_SECRET}
+      - JENKINS_URL=${JENKINS_URL}
+      - JENKINS_USERNAME=${JENKINS_USERNAME}
+      - JENKINS_API_TOKEN=${JENKINS_API_TOKEN}
+      - GITLAB_URL=${GITLAB_URL:-https://gitlab.com}
+      - GITLAB_PROJECT_ID=${GITLAB_PROJECT_ID}
+      - GITLAB_PRIVATE_TOKEN=${GITLAB_PRIVATE_TOKEN}
+    volumes:
+      - ./config:/app/config
+      - ./logs:/app/logs
+      - ./data:/app/data
     restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "python3", "-c", "from pipeline_guard.core.pipeline_monitor import PipelineMonitor; print('OK')"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
 
-  # Benchmark/testing environment
-  memristor-benchmark:
-    build:
-      context: .
-      target: benchmark
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
     volumes:
-      - ./results:/app/results
-      - memristor-cache:/app/cache
-    environment:
-      - MEMRISTOR_LOG_LEVEL=INFO
-      - MEMRISTOR_CACHE_DIR=/app/cache
-    command: python -c "
-      from memristor_nn.optimization import BenchmarkSuite;
-      suite = BenchmarkSuite();
-      results = suite.benchmark_crossbar_operations([(64, 64), (128, 128), (256, 256)]);
-      report = suite.generate_benchmark_report('/app/results/benchmark_report.md');
-      print('Benchmark completed');
-      "
+      - redis_data:/data
+    restart: unless-stopped
+    command: redis-server --appendonly yes
 
-  # Monitoring stack (optional)
+  # Monitoring stack
   prometheus:
     image: prom/prometheus:latest
     ports:

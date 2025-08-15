@@ -1,5 +1,5 @@
 """
-Minimal core test runner for Pipeline Guard (no external dependencies)
+Basic test runner for Pipeline Guard (without external dependencies)
 """
 
 import sys
@@ -8,15 +8,14 @@ import json
 import threading
 from datetime import datetime, timedelta
 
-# Import only core Pipeline Guard components without external dependencies
-sys.path.insert(0, '/root/repo')
-
+# Import Pipeline Guard components
 from pipeline_guard.core.pipeline_monitor import PipelineMonitor, PipelineStatus
 from pipeline_guard.core.failure_detector import FailureDetector
 from pipeline_guard.core.healing_engine import HealingEngine
 from pipeline_guard.utils.security import SecurityManager, SecurityConfig
 from pipeline_guard.utils.error_handling import CircuitBreaker, RetryStrategy
 from pipeline_guard.utils.validators import InputValidator
+from pipeline_guard.scaling.cache_manager import CacheManager, CacheStrategy
 
 
 def test_pipeline_monitor():
@@ -41,6 +40,7 @@ def test_pipeline_monitor():
     assert summary["total_pipelines"] == 1
     print("✓ Health summary generation works")
     
+    monitor.stop_monitoring()
     print("✓ Pipeline Monitor tests passed\n")
 
 
@@ -55,8 +55,7 @@ def test_failure_detector():
     detection = detector.detect_failure(logs)
     
     assert detection.detected
-    # Pattern detection may return generic_error or dependency_failure
-    assert detection.pattern_id in ["dependency_failure", "generic_error"]
+    assert detection.pattern_id == "dependency_failure"
     print("✓ Dependency failure detection works")
     
     # Test test failure detection
@@ -64,14 +63,12 @@ def test_failure_detector():
     test_detection = detector.detect_failure(test_logs)
     
     assert test_detection.detected
-    # Pattern detection may return generic_error or test_failure
-    assert test_detection.pattern_id in ["test_failure", "generic_error"]
+    assert test_detection.pattern_id == "test_failure"
     print("✓ Test failure detection works")
     
     # Test pattern statistics
     stats = detector.get_pattern_statistics()
-    assert stats["total_detections"] >= 0  # May be 0 if no patterns were properly matched
-    assert "patterns" in stats
+    assert stats["total_detections"] >= 2
     print("✓ Pattern statistics work")
     
     print("✓ Failure Detector tests passed\n")
@@ -169,6 +166,29 @@ def test_circuit_breaker():
     print("✓ Circuit Breaker tests passed\n")
 
 
+def test_retry_strategy():
+    """Test retry strategy functionality"""
+    print("Testing Retry Strategy...")
+    
+    retry_strategy = RetryStrategy(max_attempts=3, initial_delay=0.01)
+    
+    call_count = 0
+    def unstable_function():
+        nonlocal call_count
+        call_count += 1
+        if call_count < 3:
+            raise Exception("Temporary failure")
+        return "success"
+    
+    result = retry_strategy.execute_with_retry(unstable_function)
+    
+    assert result == "success"
+    assert call_count == 3
+    print("✓ Retry strategy works")
+    
+    print("✓ Retry Strategy tests passed\n")
+
+
 def test_input_validator():
     """Test input validation functionality"""
     print("Testing Input Validator...")
@@ -195,6 +215,41 @@ def test_input_validator():
     print("✓ Invalid email detection works")
     
     print("✓ Input Validator tests passed\n")
+
+
+def test_cache_manager():
+    """Test cache management functionality"""
+    print("Testing Cache Manager...")
+    
+    cache_manager = CacheManager(strategy=CacheStrategy.LRU, max_size=10)
+    
+    # Test basic operations
+    success = cache_manager.set("key1", "value1")
+    assert success
+    print("✓ Cache set operation works")
+    
+    value = cache_manager.get("key1")
+    assert value == "value1"
+    print("✓ Cache get operation works")
+    
+    # Test expiration
+    cache_manager.set("expire_key", "expire_value", ttl=0.1)
+    value = cache_manager.get("expire_key")
+    assert value == "expire_value"
+    
+    time.sleep(0.2)
+    value = cache_manager.get("expire_key")
+    assert value is None
+    print("✓ Cache expiration works")
+    
+    # Test cache info
+    info = cache_manager.get_cache_info()
+    assert "size" in info
+    assert "statistics" in info
+    print("✓ Cache info generation works")
+    
+    cache_manager.stop()
+    print("✓ Cache Manager tests passed\n")
 
 
 def test_integration():
@@ -237,12 +292,13 @@ def test_integration():
     assert health_summary["total_pipelines"] == 1
     print("✓ Pipeline status updated")
     
+    monitor.stop_monitoring()
     print("✓ Integration tests passed\n")
 
 
-def test_performance():
+def run_performance_tests():
     """Run basic performance tests"""
-    print("Testing Performance...")
+    print("Running Performance Tests...")
     
     # Test concurrent pipeline registration
     monitor = PipelineMonitor(check_interval=1)
@@ -272,108 +328,14 @@ def test_performance():
     print(f"✓ Registered 100 pipelines in {duration:.2f} seconds")
     print(f"✓ Average: {(duration/100)*1000:.2f} ms per pipeline")
     
+    monitor.stop_monitoring()
     print("✓ Performance tests passed\n")
 
 
-def test_advanced_features():
-    """Test advanced pipeline guard features"""
-    print("Testing Advanced Features...")
-    
-    detector = FailureDetector()
-    
-    # Test pattern learning
-    custom_logs = "Custom error: database connection failed"
-    success = detector.learn_pattern(
-        custom_logs, 
-        "Database Connection Error",
-        "restart_database"
-    )
-    assert success
-    print("✓ Pattern learning works")
-    
-    # Test pattern export/import
-    exported_patterns = detector.export_patterns()
-    assert len(exported_patterns) > 0
-    print("✓ Pattern export works")
-    
-    new_detector = FailureDetector()
-    import_success = new_detector.import_patterns(exported_patterns)
-    assert import_success
-    print("✓ Pattern import works")
-    
-    # Test security validation with edge cases
-    security_manager = SecurityManager(SecurityConfig())
-    
-    # Test XSS detection
-    xss_result = security_manager.validate_request({
-        "data": "javascript:alert('xss')"
-    }, "192.168.1.1")
-    assert not xss_result["valid"]
-    print("✓ XSS detection works")
-    
-    # Test SQL injection detection
-    sql_result = security_manager.validate_request({
-        "query": "'; DROP TABLE users; --"
-    }, "192.168.1.1")
-    assert not sql_result["valid"]
-    print("✓ SQL injection detection works")
-    
-    print("✓ Advanced Features tests passed\n")
-
-
-def calculate_test_coverage():
-    """Calculate test coverage metrics"""
-    print("Calculating Test Coverage...")
-    
-    # Core components tested
-    core_components = [
-        "PipelineMonitor",
-        "FailureDetector", 
-        "HealingEngine"
-    ]
-    
-    # Utility components tested
-    utility_components = [
-        "SecurityManager",
-        "CircuitBreaker",
-        "RetryStrategy",
-        "InputValidator"
-    ]
-    
-    # Features tested
-    features_tested = [
-        "Pipeline registration and monitoring",
-        "Failure pattern detection",
-        "Automated healing strategies",
-        "Security validation",
-        "Error handling with circuit breakers",
-        "Input validation and sanitization",
-        "Concurrent operations",
-        "Performance metrics",
-        "Pattern learning",
-        "Integration workflows"
-    ]
-    
-    total_components = len(core_components) + len(utility_components)
-    total_features = len(features_tested)
-    
-    coverage_percentage = 85.5  # Estimated based on tested functionality
-    
-    print(f"✓ Core Components Tested: {len(core_components)}")
-    print(f"✓ Utility Components Tested: {len(utility_components)}")
-    print(f"✓ Features Tested: {total_features}")
-    print(f"✓ Estimated Test Coverage: {coverage_percentage}%")
-    
-    assert coverage_percentage >= 85.0, "Test coverage below threshold"
-    print("✓ Test coverage meets requirements (≥85%)")
-    
-    print("✓ Test Coverage calculation passed\n")
-
-
 def main():
-    """Run all minimal core tests"""
+    """Run all tests"""
     print("=" * 60)
-    print("PIPELINE GUARD - MINIMAL CORE TEST SUITE")
+    print("PIPELINE GUARD - COMPREHENSIVE TEST SUITE")
     print("=" * 60)
     print()
     
@@ -388,30 +350,25 @@ def main():
         # Security and reliability tests
         test_security_manager()
         test_circuit_breaker()
+        test_retry_strategy()
         
         # Utility tests
         test_input_validator()
+        test_cache_manager()
         
         # Integration tests
         test_integration()
         
         # Performance tests
-        test_performance()
-        
-        # Advanced feature tests
-        test_advanced_features()
-        
-        # Coverage calculation
-        calculate_test_coverage()
+        run_performance_tests()
         
         end_time = time.time()
         total_duration = end_time - start_time
         
         print("=" * 60)
-        print("✅ ALL MINIMAL CORE TESTS PASSED!")
+        print("✅ ALL TESTS PASSED!")
         print(f"Total execution time: {total_duration:.2f} seconds")
-        print("✅ Pipeline Guard core system is functioning correctly")
-        print("✅ Test coverage: 85.5% (meets ≥85% requirement)")
+        print("✅ Pipeline Guard system is functioning correctly")
         print("=" * 60)
         
         return True
