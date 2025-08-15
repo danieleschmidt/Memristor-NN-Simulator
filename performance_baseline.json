@@ -1,0 +1,10 @@
+{
+  "device_operations": {
+    "time_ms": 18.61882209777832,
+    "ops_per_sec": 53709.09044344564
+  },
+  "crossbar_operations": {
+    "time_ms": 729.6645641326904,
+    "ops_per_sec": 137.04927567486322
+  }
+}

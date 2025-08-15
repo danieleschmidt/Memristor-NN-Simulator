@@ -1,291 +1,623 @@
 {
-  "timestamp": "2025-08-15T20:36:58.065554",
-  "overall_status": "PASS",
+  "overall_passed": false,
   "gates": {
+    "code_quality": {
+      "passed": false,
+      "metrics": {
+        "files_analyzed": 84,
+        "lines_of_code": 29385,
+        "complexity_score": 64,
+        "maintainability_index": 0,
+        "issues": [
+          {
+            "file": "autonomous_sdlc_orchestrator.py",
+            "complexity": 68,
+            "type": "high_complexity"
+          },
+          {
+            "file": "deploy_production_clean.py",
+            "complexity": 30,
+            "type": "high_complexity"
+          },
+          {
+            "file": "performance_benchmark.py",
+            "complexity": 38,
+            "type": "high_complexity"
+          },
+          {
+            "file": "pipeline_guard_app.py",
+            "complexity": 52,
+            "type": "high_complexity"
+          },
+          {
+            "file": "research_algorithms.py",
+            "complexity": 61,
+            "type": "high_complexity"
+          },
+          {
+            "file": "research_algorithms_clean.py",
+            "complexity": 41,
+            "type": "high_complexity"
+          },
+          {
+            "file": "run_comprehensive_tests.py",
+            "complexity": 40,
+            "type": "high_complexity"
+          },
+          {
+            "file": "run_quality_gates.py",
+            "complexity": 75,
+            "type": "high_complexity"
+          },
+          {
+            "file": "simple_quality_gates.py",
+            "complexity": 44,
+            "type": "high_complexity"
+          },
+          {
+            "file": "test_core_only.py",
+            "complexity": 20,
+            "type": "high_complexity"
+          },
+          {
+            "file": "test_minimal_core.py",
+            "complexity": 30,
+            "type": "high_complexity"
+          },
+          {
+            "file": "test_pipeline_guard_basic.py",
+            "complexity": 23,
+            "type": "high_complexity"
+          },
+          {
+            "file": "test_progressive_gates_standalone.py",
+            "complexity": 19,
+            "type": "high_complexity"
+          },
+          {
+            "file": "test_scaling_performance.py",
+            "complexity": 51,
+            "type": "high_complexity"
+          },
+          {
+            "file": "validate_implementation.py",
+            "complexity": 47,
+            "type": "high_complexity"
+          },
+          {
+            "file": "memristor_nn_simple.py",
+            "complexity": 38,
+            "type": "high_complexity"
+          },
+          {
+            "file": "memristor_nn_robust.py",
+            "complexity": 92,
+            "type": "high_complexity"
+          },
+          {
+            "file": "memristor_nn_optimized.py",
+            "complexity": 125,
+            "type": "high_complexity"
+          },
+          {
+            "file": "memristor_nn_research.py",
+            "complexity": 103,
+            "type": "high_complexity"
+          },
+          {
+            "file": "comprehensive_test_suite.py",
+            "complexity": 63,
+            "type": "high_complexity"
+          },
+          {
+            "file": "autonomous_quality_gates.py",
+            "complexity": 102,
+            "type": "high_complexity"
+          },
+          {
+            "file": "examples/basic_usage.py",
+            "complexity": 18,
+            "type": "high_complexity"
+          },
+          {
+            "file": "examples/complete_workflow.py",
+            "complexity": 33,
+            "type": "high_complexity"
+          },
+          {
+            "file": "memristor_nn/__init__.py",
+            "complexity": 16,
+            "type": "high_complexity"
+          },
+          {
+            "file": "tests/test_error_handling.py",
+            "complexity": 19,
+            "type": "high_complexity"
+          },
+          {
+            "file": "tests/test_pipeline_guard.py",
+            "complexity": 30,
+            "type": "high_complexity"
+          },
+          {
+            "file": "memristor_nn/analysis/explorer.py",
+            "complexity": 59,
+            "type": "high_complexity"
+          },
+          {
+            "file": "memristor_nn/core/crossbar.py",
+            "complexity": 30,
+            "type": "high_complexity"
+          },
+          {
+            "file": "memristor_nn/core/device_models.py",
+            "complexity": 22,
+            "type": "high_complexity"
+          },
+          {
+            "file": "memristor_nn/faults/analyzer.py",
+            "complexity": 55,
+            "type": "high_complexity"
+          },
+          {
+            "file": "memristor_nn/mapping/neural_mapper.py",
+            "complexity": 37,
+            "type": "high_complexity"
+          },
+          {
+            "file": "memristor_nn/optimization/cache_manager.py",
+            "complexity": 48,
+            "type": "high_complexity"
+          },
+          {
+            "file": "memristor_nn/optimization/memory_optimizer.py",
+            "complexity": 45,
+            "type": "high_complexity"
+          },
+          {
+            "file": "memristor_nn/optimization/parallel_simulator.py",
+            "complexity": 49,
+            "type": "high_complexity"
+          },
+          {
+            "file": "memristor_nn/optimization/performance_profiler.py",
+            "complexity": 58,
+            "type": "high_complexity"
+          },
+          {
+            "file": "memristor_nn/optimization/scaling_manager.py",
+            "complexity": 65,
+            "type": "high_complexity"
+          },
+          {
+            "file": "memristor_nn/optimization/self_improving_optimizer.py",
+            "complexity": 87,
+            "type": "high_complexity"
+          },
+          {
+            "file": "memristor_nn/quality/progressive_gates.py",
+            "complexity": 108,
+            "type": "high_complexity"
+          },
+          {
+            "file": "memristor_nn/research/benchmark_suite.py",
+            "complexity": 73,
+            "type": "high_complexity"
+          },
+          {
+            "file": "memristor_nn/research/novel_algorithms.py",
+            "complexity": 164,
+            "type": "high_complexity"
+          },
+          {
+            "file": "memristor_nn/rtl_gen/generator.py",
+            "complexity": 49,
+            "type": "high_complexity"
+          },
+          {
+            "file": "memristor_nn/simulator/simulator.py",
+            "complexity": 43,
+            "type": "high_complexity"
+          },
+          {
+            "file": "memristor_nn/testing/comprehensive_test_suite.py",
+            "complexity": 25,
+            "type": "high_complexity"
+          },
+          {
+            "file": "memristor_nn/testing/performance_benchmarks.py",
+            "complexity": 39,
+            "type": "high_complexity"
+          },
+          {
+            "file": "memristor_nn/utils/error_handling.py",
+            "complexity": 52,
+            "type": "high_complexity"
+          },
+          {
+            "file": "memristor_nn/utils/logger.py",
+            "complexity": 25,
+            "type": "high_complexity"
+          },
+          {
+            "file": "memristor_nn/utils/security.py",
+            "complexity": 51,
+            "type": "high_complexity"
+          },
+          {
+            "file": "memristor_nn/utils/validators.py",
+            "complexity": 72,
+            "type": "high_complexity"
+          },
+          {
+            "file": "memristor_nn/validation/experimental_validation.py",
+            "complexity": 42,
+            "type": "high_complexity"
+          },
+          {
+            "file": "memristor_nn/validation/validator.py",
+            "complexity": 42,
+            "type": "high_complexity"
+          },
+          {
+            "file": "pipeline_guard/core/failure_detector.py",
+            "complexity": 36,
+            "type": "high_complexity"
+          },
+          {
+            "file": "pipeline_guard/core/healing_engine.py",
+            "complexity": 46,
+            "type": "high_complexity"
+          },
+          {
+            "file": "pipeline_guard/core/pipeline_monitor.py",
+            "complexity": 35,
+            "type": "high_complexity"
+          },
+          {
+            "file": "pipeline_guard/integrations/github_actions.py",
+            "complexity": 50,
+            "type": "high_complexity"
+          },
+          {
+            "file": "pipeline_guard/integrations/gitlab_ci.py",
+            "complexity": 58,
+            "type": "high_complexity"
+          },
+          {
+            "file": "pipeline_guard/integrations/jenkins.py",
+            "complexity": 51,
+            "type": "high_complexity"
+          },
+          {
+            "file": "pipeline_guard/scaling/auto_scaler.py",
+            "complexity": 63,
+            "type": "high_complexity"
+          },
+          {
+            "file": "pipeline_guard/scaling/cache_manager.py",
+            "complexity": 84,
+            "type": "high_complexity"
+          },
+          {
+            "file": "pipeline_guard/scaling/load_balancer.py",
+            "complexity": 61,
+            "type": "high_complexity"
+          },
+          {
+            "file": "pipeline_guard/scaling/performance_monitor.py",
+            "complexity": 67,
+            "type": "high_complexity"
+          },
+          {
+            "file": "pipeline_guard/utils/error_handling.py",
+            "complexity": 52,
+            "type": "high_complexity"
+          },
+          {
+            "file": "pipeline_guard/utils/logging.py",
+            "complexity": 40,
+            "type": "high_complexity"
+          },
+          {
+            "file": "pipeline_guard/utils/security.py",
+            "complexity": 59,
+            "type": "high_complexity"
+          },
+          {
+            "file": "pipeline_guard/utils/validators.py",
+            "complexity": 94,
+            "type": "high_complexity"
+          }
+        ]
+      },
+      "duration_ms": 47.3175048828125
+    },
     "security": {
-      "status": "PASS",
-      "critical_issues": 0,
-      "warnings": 46,
-      "checks": [
-        {
-          "file": "/root/repo/autonomous_sdlc_orchestrator.py",
-          "issue": "Usage of potentially unsafe function: exec",
-          "severity": "MEDIUM"
-        },
-        {
-          "file": "/root/repo/deploy_production.py",
-          "issue": "Usage of potentially unsafe function: eval",
-          "severity": "MEDIUM"
-        },
-        {
-          "file": "/root/repo/performance_benchmark.py",
-          "issue": "Usage of potentially unsafe function: exec",
-          "severity": "MEDIUM"
-        },
-        {
-          "file": "/root/repo/research_algorithms.py",
-          "issue": "Usage of potentially unsafe function: exec",
-          "severity": "MEDIUM"
-        },
-        {
-          "file": "/root/repo/research_algorithms_clean.py",
-          "issue": "Usage of potentially unsafe function: exec",
-          "severity": "MEDIUM"
-        },
-        {
-          "file": "/root/repo/run_comprehensive_tests.py",
-          "issue": "Usage of potentially unsafe function: exec",
-          "severity": "MEDIUM"
-        },
-        {
-          "file": "/root/repo/run_quality_gates.py",
-          "issue": "Usage of potentially unsafe function: eval",
-          "severity": "MEDIUM"
-        },
-        {
-          "file": "/root/repo/run_quality_gates.py",
-          "issue": "Usage of potentially unsafe function: exec",
-          "severity": "MEDIUM"
-        },
-        {
-          "file": "/root/repo/run_quality_gates.py",
-          "issue": "Usage of potentially unsafe function: compile",
-          "severity": "MEDIUM"
-        },
-        {
-          "file": "/root/repo/run_quality_gates.py",
-          "issue": "Usage of potentially unsafe function: __import__",
-          "severity": "MEDIUM"
-        },
-        {
-          "file": "/root/repo/simple_quality_gates.py",
-          "issue": "Usage of potentially unsafe function: exec",
-          "severity": "MEDIUM"
-        },
-        {
-          "file": "/root/repo/test_minimal_core.py",
-          "issue": "Usage of potentially unsafe function: exec",
-          "severity": "MEDIUM"
-        },
-        {
-          "file": "/root/repo/test_progressive_gates_standalone.py",
-          "issue": "Usage of potentially unsafe function: exec",
-          "severity": "MEDIUM"
-        },
-        {
-          "file": "/root/repo/test_scaling_performance.py",
-          "issue": "Usage of potentially unsafe function: eval",
-          "severity": "MEDIUM"
-        },
-        {
-          "file": "/root/repo/test_scaling_performance.py",
-          "issue": "Usage of potentially unsafe function: exec",
-          "severity": "MEDIUM"
-        },
-        {
-          "file": "/root/repo/test_scaling_performance.py",
-          "issue": "Usage of potentially unsafe function: compile",
-          "severity": "MEDIUM"
-        },
-        {
-          "file": "/root/repo/validate_implementation.py",
-          "issue": "Usage of potentially unsafe function: exec",
-          "severity": "MEDIUM"
-        },
-        {
-          "file": "/root/repo/test_pipeline_guard_basic.py",
-          "issue": "Usage of potentially unsafe function: exec",
-          "severity": "MEDIUM"
-        },
-        {
-          "file": "/root/repo/test_core_only.py",
-          "issue": "Usage of potentially unsafe function: exec",
-          "severity": "MEDIUM"
-        },
-        {
-          "file": "/root/repo/examples/complete_workflow.py",
-          "issue": "Usage of potentially unsafe function: exec",
-          "severity": "MEDIUM"
-        },
-        {
-          "file": "/root/repo/tests/test_pipeline_guard.py",
-          "issue": "Usage of potentially unsafe function: eval",
-          "severity": "MEDIUM"
-        },
-        {
-          "file": "/root/repo/tests/test_pipeline_guard.py",
-          "issue": "Usage of potentially unsafe function: exec",
-          "severity": "MEDIUM"
-        },
-        {
-          "file": "/root/repo/memristor_nn/analysis/explorer.py",
-          "issue": "Usage of potentially unsafe function: eval",
-          "severity": "MEDIUM"
-        },
-        {
-          "file": "/root/repo/memristor_nn/analysis/explorer.py",
-          "issue": "Usage of potentially unsafe function: exec",
-          "severity": "MEDIUM"
-        },
-        {
-          "file": "/root/repo/memristor_nn/faults/analyzer.py",
-          "issue": "Usage of potentially unsafe function: eval",
-          "severity": "MEDIUM"
-        },
-        {
-          "file": "/root/repo/memristor_nn/optimization/memory_optimizer.py",
-          "issue": "Usage of potentially unsafe function: exec",
-          "severity": "MEDIUM"
-        },
-        {
-          "file": "/root/repo/memristor_nn/optimization/parallel_simulator.py",
-          "issue": "Usage of potentially unsafe function: exec",
-          "severity": "MEDIUM"
-        },
-        {
-          "file": "/root/repo/memristor_nn/optimization/performance_profiler.py",
-          "issue": "Usage of potentially unsafe function: exec",
-          "severity": "MEDIUM"
-        },
-        {
-          "file": "/root/repo/memristor_nn/optimization/scaling_manager.py",
-          "issue": "Usage of potentially unsafe function: exec",
-          "severity": "MEDIUM"
-        },
-        {
-          "file": "/root/repo/memristor_nn/optimization/self_improving_optimizer.py",
-          "issue": "Usage of potentially unsafe function: exec",
-          "severity": "MEDIUM"
-        },
-        {
-          "file": "/root/repo/memristor_nn/quality/progressive_gates.py",
-          "issue": "Usage of potentially unsafe function: exec",
-          "severity": "MEDIUM"
-        },
-        {
-          "file": "/root/repo/memristor_nn/research/benchmark_suite.py",
-          "issue": "Usage of potentially unsafe function: exec",
-          "severity": "MEDIUM"
-        },
-        {
-          "file": "/root/repo/memristor_nn/research/novel_algorithms.py",
-          "issue": "Usage of potentially unsafe function: eval",
-          "severity": "MEDIUM"
-        },
-        {
-          "file": "/root/repo/memristor_nn/testing/comprehensive_test_suite.py",
-          "issue": "Usage of potentially unsafe function: exec",
-          "severity": "MEDIUM"
-        },
-        {
-          "file": "/root/repo/memristor_nn/testing/performance_benchmarks.py",
-          "issue": "Usage of potentially unsafe function: exec",
-          "severity": "MEDIUM"
-        },
-        {
-          "file": "/root/repo/memristor_nn/utils/logger.py",
-          "issue": "Usage of potentially unsafe function: eval",
-          "severity": "MEDIUM"
-        },
-        {
-          "file": "/root/repo/memristor_nn/utils/logger.py",
-          "issue": "Usage of potentially unsafe function: exec",
-          "severity": "MEDIUM"
-        },
-        {
-          "file": "/root/repo/pipeline_guard/core/healing_engine.py",
-          "issue": "Usage of potentially unsafe function: exec",
-          "severity": "MEDIUM"
-        },
-        {
-          "file": "/root/repo/pipeline_guard/core/healing_engine.py",
-          "issue": "Usage of potentially unsafe function: compile",
-          "severity": "MEDIUM"
-        },
-        {
-          "file": "/root/repo/pipeline_guard/utils/error_handling.py",
-          "issue": "Usage of potentially unsafe function: exec",
-          "severity": "MEDIUM"
-        },
-        {
-          "file": "/root/repo/pipeline_guard/utils/security.py",
-          "issue": "Usage of potentially unsafe function: exec",
-          "severity": "MEDIUM"
-        },
-        {
-          "file": "/root/repo/pipeline_guard/utils/security.py",
-          "issue": "Usage of potentially unsafe function: compile",
-          "severity": "MEDIUM"
-        },
-        {
-          "file": "/root/repo/pipeline_guard/utils/validators.py",
-          "issue": "Usage of potentially unsafe function: compile",
-          "severity": "MEDIUM"
-        },
-        {
-          "file": "/root/repo/pipeline_guard/scaling/auto_scaler.py",
-          "issue": "Usage of potentially unsafe function: eval",
-          "severity": "MEDIUM"
-        },
-        {
-          "file": "/root/repo/pipeline_guard/scaling/auto_scaler.py",
-          "issue": "Usage of potentially unsafe function: exec",
-          "severity": "MEDIUM"
-        },
-        {
-          "file": "/root/repo/pipeline_guard/scaling/performance_monitor.py",
-          "issue": "Usage of potentially unsafe function: eval",
-          "severity": "MEDIUM"
-        }
-      ]
+      "passed": false,
+      "metrics": {
+        "vulnerabilities": [
+          {
+            "file": "deploy_production.py",
+            "type": "potential_hardcoded_secret",
+            "pattern": "api_key=",
+            "severity": "medium"
+          },
+          {
+            "file": "deploy_production.py",
+            "type": "potential_hardcoded_secret",
+            "pattern": "secret_key=",
+            "severity": "medium"
+          },
+          {
+            "file": "run_comprehensive_tests.py",
+            "line": 182,
+            "type": "insecure_pattern",
+            "pattern": "exec(",
+            "severity": "high"
+          },
+          {
+            "file": "simple_quality_gates.py",
+            "type": "potential_hardcoded_secret",
+            "pattern": "password=",
+            "severity": "medium"
+          },
+          {
+            "file": "simple_quality_gates.py",
+            "type": "potential_hardcoded_secret",
+            "pattern": "api_key=",
+            "severity": "medium"
+          },
+          {
+            "file": "simple_quality_gates.py",
+            "type": "potential_hardcoded_secret",
+            "pattern": "token=",
+            "severity": "medium"
+          },
+          {
+            "file": "memristor_nn_optimized.py",
+            "line": 159,
+            "type": "insecure_pattern",
+            "pattern": "pickle.load",
+            "severity": "high"
+          },
+          {
+            "file": "autonomous_quality_gates.py",
+            "type": "potential_hardcoded_secret",
+            "pattern": "password=",
+            "severity": "medium"
+          },
+          {
+            "file": "autonomous_quality_gates.py",
+            "type": "potential_hardcoded_secret",
+            "pattern": "passwd=",
+            "severity": "medium"
+          },
+          {
+            "file": "autonomous_quality_gates.py",
+            "type": "potential_hardcoded_secret",
+            "pattern": "api_key=",
+            "severity": "medium"
+          },
+          {
+            "file": "autonomous_quality_gates.py",
+            "type": "potential_hardcoded_secret",
+            "pattern": "secret_key=",
+            "severity": "medium"
+          },
+          {
+            "file": "autonomous_quality_gates.py",
+            "type": "potential_hardcoded_secret",
+            "pattern": "token=",
+            "severity": "medium"
+          },
+          {
+            "file": "autonomous_quality_gates.py",
+            "type": "potential_hardcoded_secret",
+            "pattern": "auth_token=",
+            "severity": "medium"
+          },
+          {
+            "file": "autonomous_quality_gates.py",
+            "type": "potential_hardcoded_secret",
+            "pattern": "private_key=",
+            "severity": "medium"
+          },
+          {
+            "file": "memristor_nn/optimization/cache_manager.py",
+            "line": 87,
+            "type": "insecure_pattern",
+            "pattern": "pickle.load",
+            "severity": "high"
+          },
+          {
+            "file": "memristor_nn/quality/progressive_gates.py",
+            "type": "potential_hardcoded_secret",
+            "pattern": "password=",
+            "severity": "medium"
+          },
+          {
+            "file": "memristor_nn/quality/progressive_gates.py",
+            "type": "potential_hardcoded_secret",
+            "pattern": "api_key=",
+            "severity": "medium"
+          },
+          {
+            "file": "memristor_nn/quality/progressive_gates.py",
+            "type": "potential_hardcoded_secret",
+            "pattern": "token=",
+            "severity": "medium"
+          },
+          {
+            "file": "memristor_nn/quality/progressive_gates.py",
+            "type": "potential_hardcoded_secret",
+            "pattern": "private_key=",
+            "severity": "medium"
+          }
+        ],
+        "security_score": 5,
+        "hardcoded_secrets": [
+          {
+            "file": "deploy_production.py",
+            "type": "potential_hardcoded_secret",
+            "pattern": "api_key=",
+            "severity": "medium"
+          },
+          {
+            "file": "deploy_production.py",
+            "type": "potential_hardcoded_secret",
+            "pattern": "secret_key=",
+            "severity": "medium"
+          },
+          {
+            "file": "simple_quality_gates.py",
+            "type": "potential_hardcoded_secret",
+            "pattern": "password=",
+            "severity": "medium"
+          },
+          {
+            "file": "simple_quality_gates.py",
+            "type": "potential_hardcoded_secret",
+            "pattern": "api_key=",
+            "severity": "medium"
+          },
+          {
+            "file": "simple_quality_gates.py",
+            "type": "potential_hardcoded_secret",
+            "pattern": "token=",
+            "severity": "medium"
+          },
+          {
+            "file": "autonomous_quality_gates.py",
+            "type": "potential_hardcoded_secret",
+            "pattern": "password=",
+            "severity": "medium"
+          },
+          {
+            "file": "autonomous_quality_gates.py",
+            "type": "potential_hardcoded_secret",
+            "pattern": "passwd=",
+            "severity": "medium"
+          },
+          {
+            "file": "autonomous_quality_gates.py",
+            "type": "potential_hardcoded_secret",
+            "pattern": "api_key=",
+            "severity": "medium"
+          },
+          {
+            "file": "autonomous_quality_gates.py",
+            "type": "potential_hardcoded_secret",
+            "pattern": "secret_key=",
+            "severity": "medium"
+          },
+          {
+            "file": "autonomous_quality_gates.py",
+            "type": "potential_hardcoded_secret",
+            "pattern": "token=",
+            "severity": "medium"
+          },
+          {
+            "file": "autonomous_quality_gates.py",
+            "type": "potential_hardcoded_secret",
+            "pattern": "auth_token=",
+            "severity": "medium"
+          },
+          {
+            "file": "autonomous_quality_gates.py",
+            "type": "potential_hardcoded_secret",
+            "pattern": "private_key=",
+            "severity": "medium"
+          },
+          {
+            "file": "memristor_nn/quality/progressive_gates.py",
+            "type": "potential_hardcoded_secret",
+            "pattern": "password=",
+            "severity": "medium"
+          },
+          {
+            "file": "memristor_nn/quality/progressive_gates.py",
+            "type": "potential_hardcoded_secret",
+            "pattern": "api_key=",
+            "severity": "medium"
+          },
+          {
+            "file": "memristor_nn/quality/progressive_gates.py",
+            "type": "potential_hardcoded_secret",
+            "pattern": "token=",
+            "severity": "medium"
+          },
+          {
+            "file": "memristor_nn/quality/progressive_gates.py",
+            "type": "potential_hardcoded_secret",
+            "pattern": "private_key=",
+            "severity": "medium"
+          }
+        ],
+        "insecure_patterns": [
+          {
+            "file": "run_comprehensive_tests.py",
+            "line": 182,
+            "type": "insecure_pattern",
+            "pattern": "exec(",
+            "severity": "high"
+          },
+          {
+            "file": "memristor_nn_optimized.py",
+            "line": 159,
+            "type": "insecure_pattern",
+            "pattern": "pickle.load",
+            "severity": "high"
+          },
+          {
+            "file": "memristor_nn/optimization/cache_manager.py",
+            "line": 87,
+            "type": "insecure_pattern",
+            "pattern": "pickle.load",
+            "severity": "high"
+          }
+        ]
+      },
+      "duration_ms": 67.84796714782715
     },
     "performance": {
-      "status": "PASS",
-      "benchmarks": {
-        "pipeline_registration_1000": {
-          "duration_seconds": 0.002770662307739258,
-          "rate_per_second": 360924.53317270457,
-          "threshold": 10.0,
-          "status": "PASS"
-        },
-        "failure_detection_500": {
-          "duration_seconds": 0.030922889709472656,
-          "rate_per_second": 16169.252120277564,
-          "threshold": 5.0,
-          "status": "PASS"
-        },
-        "healing_execution_50": {
-          "duration_seconds": 1.0248496532440186,
-          "rate_per_second": 48.7876439648801,
-          "threshold": 30.0,
-          "status": "PASS"
-        }
-      },
-      "issues": []
-    },
-    "code_quality": {
-      "status": "PASS",
+      "passed": true,
       "metrics": {
-        "total_lines": 20452,
-        "total_files": 65,
-        "average_lines_per_file": 314.6461538461538,
-        "large_files": 1,
-        "documentation_percentage": 87.6923076923077,
-        "quality_score": 0.8999999999999999
+        "benchmarks": {
+          "device_operations": {
+            "time_ms": 18.61882209777832,
+            "ops_per_sec": 53709.09044344564
+          },
+          "crossbar_operations": {
+            "time_ms": 729.6645641326904,
+            "ops_per_sec": 137.04927567486322
+          }
+        },
+        "memory_usage_mb": 75.41796875,
+        "execution_time_ms": 1535.9416007995605,
+        "regression_detected": false
       },
-      "issues": []
+      "duration_ms": 1555.3836822509766
     },
-    "test_coverage": {
-      "status": "PASS",
-      "coverage_percentage": 85.5,
-      "tests_run": 1,
-      "tests_passed": 1,
-      "issues": []
+    "documentation": {
+      "passed": false,
+      "metrics": {
+        "files_with_docstrings": 126,
+        "total_python_files": 72,
+        "documentation_coverage": 175.0,
+        "readme_quality": 71.42857142857143,
+        "api_documentation": 37.5
+      },
+      "duration_ms": 17.091989517211914
     }
   },
   "summary": {
     "total_gates": 4,
-    "passed_gates": 4,
-    "failed_gates": 0
-  }
+    "passed_gates": 1,
+    "failed_gates": 3,
+    "pass_rate": 0.25,
+    "total_duration_ms": 1687.6411437988281
+  },
+  "timestamp": 1755299408.9178927,
+  "deployment_ready": false
 }
