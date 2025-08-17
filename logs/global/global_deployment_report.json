@@ -1,0 +1,362 @@
+{
+  "timestamp": 1755394925.7868752,
+  "deployment_results": {
+    "na": {
+      "region": "na",
+      "deployment_timestamp": 1755394924.5798917,
+      "overall_status": "success",
+      "failed_steps": [],
+      "regional_config": {
+        "data_center": "us-east-1",
+        "timezone": "America/New_York",
+        "currency": "USD",
+        "supported_languages": [
+          "en",
+          "es",
+          "fr"
+        ],
+        "regulatory_requirements": [
+          "CCPA",
+          "PIPEDA",
+          "SOX"
+        ]
+      },
+      "deployment_results": {
+        "infrastructure": {
+          "status": "success",
+          "data_center": "us-east-1",
+          "region": "na"
+        },
+        "data_localization": {
+          "status": "success",
+          "data_residency": "us-east-1",
+          "encryption_enabled": true
+        },
+        "compliance": {
+          "status": "success",
+          "gdpr_enabled": false,
+          "ccpa_enabled": true,
+          "pdpa_enabled": true,
+          "audit_logging": true
+        },
+        "i18n": {
+          "status": "success",
+          "supported_languages": [
+            "en",
+            "es",
+            "fr"
+          ],
+          "default_language": "en",
+          "timezone": "America/New_York",
+          "currency": "USD"
+        },
+        "monitoring": {
+          "status": "success",
+          "compliance_monitoring": true,
+          "performance_monitoring": true,
+          "audit_trail": true
+        },
+        "testing": {
+          "status": "success",
+          "test_results": {
+            "all_passed": true,
+            "total_tests": 5,
+            "passed_tests": 5,
+            "test_details": {
+              "connectivity": {
+                "passed": true,
+                "latency_ms": 45.2,
+                "bandwidth_mbps": 1000
+              },
+              "compliance": {
+                "passed": true,
+                "compliance_score": 100.0
+              },
+              "i18n": {
+                "passed": true,
+                "sample_translation": "Simulation started"
+              },
+              "performance": {
+                "passed": true,
+                "response_time_ms": 124.5,
+                "throughput_rps": 850
+              },
+              "security": {
+                "passed": true,
+                "encryption_verified": true,
+                "access_controls_verified": true
+              }
+            }
+          }
+        }
+      }
+    },
+    "eu": {
+      "region": "eu",
+      "deployment_timestamp": 1755394925.183396,
+      "overall_status": "success",
+      "failed_steps": [],
+      "regional_config": {
+        "data_center": "eu-west-1",
+        "timezone": "Europe/London",
+        "currency": "EUR",
+        "supported_languages": [
+          "en",
+          "de",
+          "fr",
+          "es",
+          "it"
+        ],
+        "regulatory_requirements": [
+          "GDPR",
+          "DSGVO",
+          "Digital Services Act"
+        ]
+      },
+      "deployment_results": {
+        "infrastructure": {
+          "status": "success",
+          "data_center": "eu-west-1",
+          "region": "eu"
+        },
+        "data_localization": {
+          "status": "success",
+          "data_residency": "eu-west-1",
+          "encryption_enabled": true
+        },
+        "compliance": {
+          "status": "success",
+          "gdpr_enabled": true,
+          "ccpa_enabled": false,
+          "pdpa_enabled": true,
+          "audit_logging": true
+        },
+        "i18n": {
+          "status": "success",
+          "supported_languages": [
+            "en",
+            "de",
+            "fr",
+            "es",
+            "it"
+          ],
+          "default_language": "en",
+          "timezone": "Europe/London",
+          "currency": "EUR"
+        },
+        "monitoring": {
+          "status": "success",
+          "compliance_monitoring": true,
+          "performance_monitoring": true,
+          "audit_trail": true
+        },
+        "testing": {
+          "status": "success",
+          "test_results": {
+            "all_passed": true,
+            "total_tests": 5,
+            "passed_tests": 5,
+            "test_details": {
+              "connectivity": {
+                "passed": true,
+                "latency_ms": 45.2,
+                "bandwidth_mbps": 1000
+              },
+              "compliance": {
+                "passed": true,
+                "compliance_score": 100.0
+              },
+              "i18n": {
+                "passed": true,
+                "sample_translation": "Simulation started"
+              },
+              "performance": {
+                "passed": true,
+                "response_time_ms": 124.5,
+                "throughput_rps": 850
+              },
+              "security": {
+                "passed": true,
+                "encryption_verified": true,
+                "access_controls_verified": true
+              }
+            }
+          }
+        }
+      }
+    },
+    "ap": {
+      "region": "ap",
+      "deployment_timestamp": 1755394925.7865474,
+      "overall_status": "success",
+      "failed_steps": [],
+      "regional_config": {
+        "data_center": "ap-southeast-1",
+        "timezone": "Asia/Singapore",
+        "currency": "USD",
+        "supported_languages": [
+          "en",
+          "ja",
+          "zh",
+          "ko"
+        ],
+        "regulatory_requirements": [
+          "PDPA",
+          "PIPEDA",
+          "Privacy Act"
+        ]
+      },
+      "deployment_results": {
+        "infrastructure": {
+          "status": "success",
+          "data_center": "ap-southeast-1",
+          "region": "ap"
+        },
+        "data_localization": {
+          "status": "success",
+          "data_residency": "ap-southeast-1",
+          "encryption_enabled": true
+        },
+        "compliance": {
+          "status": "success",
+          "gdpr_enabled": false,
+          "ccpa_enabled": true,
+          "pdpa_enabled": true,
+          "audit_logging": true
+        },
+        "i18n": {
+          "status": "success",
+          "supported_languages": [
+            "en",
+            "ja",
+            "zh",
+            "ko"
+          ],
+          "default_language": "en",
+          "timezone": "Asia/Singapore",
+          "currency": "USD"
+        },
+        "monitoring": {
+          "status": "success",
+          "compliance_monitoring": true,
+          "performance_monitoring": true,
+          "audit_trail": true
+        },
+        "testing": {
+          "status": "success",
+          "test_results": {
+            "all_passed": true,
+            "total_tests": 5,
+            "passed_tests": 5,
+            "test_details": {
+              "connectivity": {
+                "passed": true,
+                "latency_ms": 45.2,
+                "bandwidth_mbps": 1000
+              },
+              "compliance": {
+                "passed": true,
+                "compliance_score": 100.0
+              },
+              "i18n": {
+                "passed": true,
+                "sample_translation": "Simulation started"
+              },
+              "performance": {
+                "passed": true,
+                "response_time_ms": 124.5,
+                "throughput_rps": 850
+              },
+              "security": {
+                "passed": true,
+                "encryption_verified": true,
+                "access_controls_verified": true
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "global_status": {
+    "timestamp": 1755394925.7868283,
+    "total_regions": 6,
+    "deployed_regions": [
+      {
+        "region": "na",
+        "data_center": "us-east-1",
+        "languages": [
+          "en",
+          "es",
+          "fr"
+        ],
+        "timezone": "America/New_York",
+        "currency": "USD"
+      },
+      {
+        "region": "eu",
+        "data_center": "eu-west-1",
+        "languages": [
+          "en",
+          "de",
+          "fr",
+          "es",
+          "it"
+        ],
+        "timezone": "Europe/London",
+        "currency": "EUR"
+      },
+      {
+        "region": "ap",
+        "data_center": "ap-southeast-1",
+        "languages": [
+          "en",
+          "ja",
+          "zh",
+          "ko"
+        ],
+        "timezone": "Asia/Singapore",
+        "currency": "USD"
+      }
+    ],
+    "supported_languages": [
+      "en",
+      "es",
+      "fr",
+      "de",
+      "it",
+      "ja",
+      "zh",
+      "ko"
+    ],
+    "compliance_summary": {
+      "gdpr_regions": [
+        "eu"
+      ],
+      "ccpa_regions": [
+        "na",
+        "ap"
+      ],
+      "pdpa_regions": [
+        "na",
+        "eu",
+        "ap"
+      ]
+    }
+  },
+  "supported_languages": [
+    "en",
+    "es",
+    "fr",
+    "de",
+    "it",
+    "ja",
+    "zh",
+    "ko"
+  ],
+  "compliance_coverage": {
+    "gdpr_coverage": 1,
+    "ccpa_coverage": 2,
+    "pdpa_coverage": 3
+  }
+}
