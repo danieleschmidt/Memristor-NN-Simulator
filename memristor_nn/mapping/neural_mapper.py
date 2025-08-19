@@ -153,7 +153,7 @@ def _map_linear_layer(
         
         # Program weights for this tile
         tile_weights = weight_matrix[row_start:row_end, col_start:col_end]
-        crossbar.program_weights(tile_weights.T)  # Transpose for crossbar orientation
+        crossbar.program_weights(tile_weights)  # Weights already in correct orientation
         
         crossbars.append(crossbar)
     
