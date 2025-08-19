@@ -80,83 +80,84 @@ def simulate(
     circuit_breaker_trips = 0
     degraded_performance = False
     
-    with error_context("simulation_setup", logger):
-        # Validate inputs
-        temperature = validate_temperature(temperature)
-        batch_size = validate_batch_size(batch_size)
-        
-        if max_batches is not None:
-            max_batches = validate_positive_number(max_batches, "max_batches", max_value=10000)
-        
-        # Rate limiting
-        rate_limit_check("simulation", max_calls=10, window_seconds=60)
-        
-        # Memory check
-        check_memory_usage(max_mb=2000)
-        
-        logger.info(f"Starting simulation: noise={include_noise}, temp={temperature}K, batch_size={batch_size}")
-        
-        start_time = time.time()
-        
-        # Setup simulation parameters
-        if not include_noise:
-            _disable_noise_in_model(mapped_model)
-        
-        _set_temperature_in_model(mapped_model, temperature)
-        
-        # Prepare data
-        if isinstance(test_data, torch.Tensor):
-            test_loader = _tensor_to_dataloader(test_data, batch_size)
-        else:
-            test_loader = test_data
-        
-        # Run inference simulation with circuit breaker protection
-        try:
-            accuracy, inference_stats = _run_inference_simulation_robust(
-                mapped_model, test_loader, max_batches
-            )
-        except Exception as e:
-            logger.warning(f"Primary inference simulation failed: {e}")
-            # Fall back to degraded mode
-            logger.info("Attempting degraded simulation mode...")
-            degraded_performance = True
-            accuracy, inference_stats = _run_degraded_simulation(
-                mapped_model, test_loader, max_batches
-            )
-        
-        # Get hardware statistics
-        hw_stats = mapped_model.get_hardware_stats()
-        
-        # Calculate performance metrics
-        total_time = time.time() - start_time
-        avg_latency_us = inference_stats["avg_latency_us"]
-        total_energy_pj = inference_stats["total_energy_pj"] 
-        inference_count = inference_stats["inference_count"]
-        
-        # Calculate throughput (GOPS)
-        ops_per_inference = _estimate_operations(mapped_model)
-        total_ops = ops_per_inference * inference_count
-        throughput_gops = (total_ops / total_time) / 1e9 if total_time > 0 else 0.0
-        
-        # Get error statistics
-        error_collector = get_error_collector()
-        error_summary = error_collector.get_error_summary()
-        error_rate = error_summary['recent_errors'] / max(1, inference_count)
+    try:
+        with error_context("simulation_setup", logger):
+            # Validate inputs
+            temperature = validate_temperature(temperature)
+            batch_size = validate_batch_size(batch_size)
+            
+            if max_batches is not None:
+                max_batches = validate_positive_number(max_batches, "max_batches", max_value=10000)
+            
+            # Rate limiting
+            rate_limit_check("simulation", max_calls=10, window_seconds=60)
+            
+            # Memory check
+            check_memory_usage(max_mb=2000)
+            
+            logger.info(f"Starting simulation: noise={include_noise}, temp={temperature}K, batch_size={batch_size}")
+            
+            start_time = time.time()
+            
+            # Setup simulation parameters
+            if not include_noise:
+                _disable_noise_in_model(mapped_model)
+            
+            _set_temperature_in_model(mapped_model, temperature)
+            
+            # Prepare data
+            if isinstance(test_data, torch.Tensor):
+                test_loader = _tensor_to_dataloader(test_data, batch_size)
+            else:
+                test_loader = test_data
+            
+            # Run inference simulation with circuit breaker protection
+            try:
+                accuracy, inference_stats = _run_inference_simulation_robust(
+                    mapped_model, test_loader, max_batches
+                )
+            except Exception as e:
+                logger.warning(f"Primary inference simulation failed: {e}")
+                # Fall back to degraded mode
+                logger.info("Attempting degraded simulation mode...")
+                degraded_performance = True
+                accuracy, inference_stats = _run_degraded_simulation(
+                    mapped_model, test_loader, max_batches
+                )
+            
+            # Get hardware statistics
+            hw_stats = mapped_model.get_hardware_stats()
+            
+            # Calculate performance metrics
+            total_time = time.time() - start_time
+            avg_latency_us = inference_stats["avg_latency_us"]
+            total_energy_pj = inference_stats["total_energy_pj"] 
+            inference_count = inference_stats["inference_count"]
+            
+            # Calculate throughput (GOPS)
+            ops_per_inference = _estimate_operations(mapped_model)
+            total_ops = ops_per_inference * inference_count
+            throughput_gops = (total_ops / total_time) / 1e9 if total_time > 0 else 0.0
+            
+            # Get error statistics
+            error_collector = get_error_collector()
+            error_summary = error_collector.get_error_summary()
+            error_rate = error_summary.get('recent_errors', 0) / max(1, inference_count)
 
-        return SimulationResults(
-            accuracy=accuracy,
-            energy_pj=total_energy_pj / inference_count if inference_count > 0 else 0.0,
-            latency_us=avg_latency_us,
-            throughput_gops=throughput_gops,
-            power_mw=hw_stats["total_power_mw"],
-            area_mm2=hw_stats["total_area_mm2"],
-            device_count=hw_stats["total_devices"],
-            inference_count=inference_count,
-            total_time_s=total_time,
-            error_rate=error_rate,
-            degraded_performance=degraded_performance,
-            circuit_breaker_trips=circuit_breaker_trips
-        )
+            return SimulationResults(
+                accuracy=accuracy,
+                energy_pj=total_energy_pj / inference_count if inference_count > 0 else 0.0,
+                latency_us=avg_latency_us,
+                throughput_gops=throughput_gops,
+                power_mw=hw_stats["total_power_mw"],
+                area_mm2=hw_stats["total_area_mm2"],
+                device_count=hw_stats["total_devices"],
+                inference_count=inference_count,
+                total_time_s=total_time,
+                error_rate=error_rate,
+                degraded_performance=degraded_performance,
+                circuit_breaker_trips=circuit_breaker_trips
+            )
         
     except Exception as e:
         logger.error(f"Simulation failed: {e}")
