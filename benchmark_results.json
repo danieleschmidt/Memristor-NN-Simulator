@@ -1,0 +1,181 @@
+{
+  "benchmark_results": {
+    "device_comparison": {
+      "baseline_name": "IEDM2024_TaOx",
+      "results": {
+        "IEDM2024_TaOx": {
+          "accuracy": 0.847,
+          "energy_pj": 145.7,
+          "latency_us": 2.3,
+          "power_mw": 34.2,
+          "throughput_gops": 87.5
+        },
+        "IEDM2024_HfOx": {
+          "accuracy": 0.891,
+          "energy_pj": 98.4,
+          "latency_us": 1.8,
+          "power_mw": 28.7,
+          "throughput_gops": 112.3,
+          "improvements": {
+            "accuracy": 5.2,
+            "energy_efficiency": 32.4,
+            "latency": 21.7,
+            "power": 16.1,
+            "throughput": 28.3
+          }
+        }
+      }
+    },
+    "scaling": {
+      "small_mlp": [
+        {
+          "size": 64,
+          "accuracy": 0.823,
+          "latency_us": 0.8,
+          "power_mw": 12.4
+        },
+        {
+          "size": 128,
+          "accuracy": 0.847,
+          "latency_us": 2.3,
+          "power_mw": 34.2
+        },
+        {
+          "size": 256,
+          "accuracy": 0.867,
+          "latency_us": 6.7,
+          "power_mw": 89.7
+        }
+      ],
+      "medium_mlp": [
+        {
+          "size": 128,
+          "accuracy": 0.901,
+          "latency_us": 4.2,
+          "power_mw": 67.8
+        },
+        {
+          "size": 256,
+          "accuracy": 0.923,
+          "latency_us": 12.8,
+          "power_mw": 156.3
+        },
+        {
+          "size": 512,
+          "accuracy": 0.934,
+          "latency_us": 34.7,
+          "power_mw": 387.9
+        }
+      ]
+    },
+    "temperature": {
+      "IEDM2024_TaOx": [
+        {
+          "temp_k": 250,
+          "accuracy": 0.856,
+          "power_mw": 31.2
+        },
+        {
+          "temp_k": 300,
+          "accuracy": 0.847,
+          "power_mw": 34.2
+        },
+        {
+          "temp_k": 350,
+          "accuracy": 0.834,
+          "power_mw": 38.7
+        },
+        {
+          "temp_k": 400,
+          "accuracy": 0.817,
+          "power_mw": 44.1
+        }
+      ],
+      "IEDM2024_HfOx": [
+        {
+          "temp_k": 250,
+          "accuracy": 0.903,
+          "power_mw": 26.4
+        },
+        {
+          "temp_k": 300,
+          "accuracy": 0.891,
+          "power_mw": 28.7
+        },
+        {
+          "temp_k": 350,
+          "accuracy": 0.876,
+          "power_mw": 32.1
+        },
+        {
+          "temp_k": 400,
+          "accuracy": 0.858,
+          "power_mw": 36.8
+        }
+      ]
+    },
+    "noise_robustness": {
+      "IEDM2024_TaOx": [
+        {
+          "noise_level": 0.0,
+          "accuracy": 0.869
+        },
+        {
+          "noise_level": 0.01,
+          "accuracy": 0.863
+        },
+        {
+          "noise_level": 0.05,
+          "accuracy": 0.847
+        },
+        {
+          "noise_level": 0.1,
+          "accuracy": 0.821
+        },
+        {
+          "noise_level": 0.2,
+          "accuracy": 0.776
+        }
+      ],
+      "IEDM2024_HfOx": [
+        {
+          "noise_level": 0.0,
+          "accuracy": 0.912
+        },
+        {
+          "noise_level": 0.01,
+          "accuracy": 0.908
+        },
+        {
+          "noise_level": 0.05,
+          "accuracy": 0.891
+        },
+        {
+          "noise_level": 0.1,
+          "accuracy": 0.867
+        },
+        {
+          "noise_level": 0.2,
+          "accuracy": 0.823
+        }
+      ]
+    },
+    "timestamp": 1755687549.4843736
+  },
+  "performance_metrics": {
+    "IEDM2024_TaOx_efficiency": 5.813315030885382,
+    "IEDM2024_HfOx_efficiency": 9.054878048780488,
+    "small_mlp_scaling_efficiency": 0.3817100351917818,
+    "medium_mlp_scaling_efficiency": 0.4260569760584965,
+    "IEDM2024_TaOx_temp_stability": 0.9825028017279412,
+    "IEDM2024_HfOx_temp_stability": 0.9809099112919697
+  },
+  "summary": {
+    "total_benchmarks": 4,
+    "devices_tested": 2,
+    "models_tested": 2,
+    "temperature_points": 4,
+    "noise_levels": 5,
+    "validation_status": "PASSED"
+  }
+}
