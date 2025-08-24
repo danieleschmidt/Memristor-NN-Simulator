@@ -1,9 +1,9 @@
 {
-  "timestamp": 1755953831.7708418,
+  "timestamp": 1756042799.2702749,
   "deployment_results": {
     "na": {
       "region": "na",
-      "deployment_timestamp": 1755953830.55842,
+      "deployment_timestamp": 1756042798.0620503,
       "overall_status": "success",
       "failed_steps": [],
       "regional_config": {
@@ -93,7 +93,7 @@
     },
     "eu": {
       "region": "eu",
-      "deployment_timestamp": 1755953831.1642163,
+      "deployment_timestamp": 1756042798.6659477,
       "overall_status": "success",
       "failed_steps": [],
       "regional_config": {
@@ -187,7 +187,7 @@
     },
     "ap": {
       "region": "ap",
-      "deployment_timestamp": 1755953831.770448,
+      "deployment_timestamp": 1756042799.269819,
       "overall_status": "success",
       "failed_steps": [],
       "regional_config": {
@@ -279,7 +279,7 @@
     }
   },
   "global_status": {
-    "timestamp": 1755953831.7707927,
+    "timestamp": 1756042799.2702222,
     "total_regions": 6,
     "deployed_regions": [
       {

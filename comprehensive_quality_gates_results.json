@@ -7,7 +7,7 @@
     "performance_passed": false,
     "documentation_passed": true
   },
-  "overall_quality_score": 88.16144097680157,
+  "overall_quality_score": 88.40423792593323,
   "overall_grade": "B",
   "ready_for_production": false,
   "gate_results": {
@@ -16,64 +16,64 @@
       "passed_tests": 181,
       "failed_tests": 16,
       "skipped_tests": 0,
-      "execution_time_s": 8.654594421386719e-05,
+      "execution_time_s": 9.179115295410156e-05,
       "pass_rate": 0.9187817258883249,
-      "average_coverage_percent": 81.475,
+      "average_coverage_percent": 81.0,
       "category_results": {
         "unit_tests": {
           "category": "unit_tests",
           "tests_run": 96,
           "tests_passed": 91,
           "tests_failed": 5,
-          "coverage_percent": 88.375,
+          "coverage_percent": 86.0,
           "coverage_data": {
             "memristor_nn.core.crossbar": {
-              "statements": 81,
+              "statements": 86,
               "branches": 76,
-              "functions": 85,
-              "lines": 91
-            },
-            "memristor_nn.core.device_models": {
-              "statements": 90,
-              "branches": 76,
-              "functions": 94,
-              "lines": 93
-            },
-            "memristor_nn.mapping.neural_mapper": {
-              "statements": 82,
-              "branches": 76,
-              "functions": 98,
-              "lines": 96
-            },
-            "memristor_nn.simulator.simulator": {
-              "statements": 91,
-              "branches": 85,
-              "functions": 90,
-              "lines": 84
-            },
-            "memristor_nn.analysis.explorer": {
-              "statements": 95,
-              "branches": 95,
-              "functions": 96,
-              "lines": 86
-            },
-            "memristor_nn.rtl_gen.generator": {
-              "statements": 85,
-              "branches": 83,
-              "functions": 91,
-              "lines": 91
-            },
-            "memristor_nn.faults.analyzer": {
-              "statements": 98,
-              "branches": 88,
-              "functions": 88,
+              "functions": 87,
               "lines": 95
             },
-            "memristor_nn.validation.validator": {
-              "statements": 85,
+            "memristor_nn.core.device_models": {
+              "statements": 83,
+              "branches": 80,
+              "functions": 86,
+              "lines": 82
+            },
+            "memristor_nn.mapping.neural_mapper": {
+              "statements": 98,
+              "branches": 91,
+              "functions": 91,
+              "lines": 95
+            },
+            "memristor_nn.simulator.simulator": {
+              "statements": 82,
+              "branches": 92,
+              "functions": 95,
+              "lines": 88
+            },
+            "memristor_nn.analysis.explorer": {
+              "statements": 80,
+              "branches": 77,
+              "functions": 96,
+              "lines": 82
+            },
+            "memristor_nn.rtl_gen.generator": {
+              "statements": 90,
+              "branches": 95,
+              "functions": 90,
+              "lines": 82
+            },
+            "memristor_nn.faults.analyzer": {
+              "statements": 81,
               "branches": 87,
-              "functions": 85,
-              "lines": 97
+              "functions": 93,
+              "lines": 96
+            },
+            "memristor_nn.validation.validator": {
+              "statements": 88,
+              "branches": 87,
+              "functions": 95,
+              "lines": 85
             }
           },
           "execution_time_s": 4.800000000000001
@@ -117,33 +117,33 @@
           "coverage_percent": 65,
           "benchmark_results": {
             "crossbar_simulation_speed": {
-              "baseline_performance": 302.6425298359093,
-              "current_performance": 759.7781387790081,
-              "improvement_percent": 19.45461532519154,
+              "baseline_performance": 371.908242785897,
+              "current_performance": 1098.371184661809,
+              "improvement_percent": 20.391069537694964,
               "passed_threshold": true
             },
             "neural_inference_throughput": {
-              "baseline_performance": 442.9814924217673,
-              "current_performance": 917.7340410633369,
-              "improvement_percent": 20.625287145348643,
+              "baseline_performance": 305.80525510814715,
+              "current_performance": 364.2942000669255,
+              "improvement_percent": 5.165250692639402,
               "passed_threshold": true
             },
             "memory_usage_optimization": {
-              "baseline_performance": 693.8121053134992,
-              "current_performance": 672.7897434043321,
-              "improvement_percent": 22.171427905107542,
-              "passed_threshold": true
-            },
-            "parallel_processing_efficiency": {
-              "baseline_performance": 824.4671303181628,
-              "current_performance": 293.74411272568665,
-              "improvement_percent": 19.12744082418876,
+              "baseline_performance": 441.9731197131085,
+              "current_performance": 828.984407925507,
+              "improvement_percent": 19.771725644676913,
               "passed_threshold": false
             },
+            "parallel_processing_efficiency": {
+              "baseline_performance": 769.2567351354539,
+              "current_performance": 146.03711515398993,
+              "improvement_percent": 15.760660778484574,
+              "passed_threshold": true
+            },
             "cache_performance": {
-              "baseline_performance": 217.3885129522792,
-              "current_performance": 1046.843348255899,
-              "improvement_percent": 12.631893293765215,
+              "baseline_performance": 529.2280624501136,
+              "current_performance": 880.0114152928885,
+              "improvement_percent": 17.22750941428787,
               "passed_threshold": true
             }
           },
@@ -165,9 +165,9 @@
           ],
           "vulnerabilities_found": {
             "high": 0,
-            "medium": 2,
-            "low": 1,
-            "info": 2
+            "medium": 1,
+            "low": 5,
+            "info": 4
           },
           "execution_time_s": 10.799999999999999
         }
@@ -175,7 +175,7 @@
       "status": "completed"
     },
     "security": {
-      "total_issues": 4,
+      "total_issues": 5,
       "critical_issues": 0,
       "high_issues": 0,
       "security_score": 1.0,
@@ -243,17 +243,24 @@
         "configuration_security": {
           "category": "configuration_security",
           "config_files_scanned": 3,
-          "configuration_issues": 0,
-          "issues": [],
-          "score": 1.0
+          "configuration_issues": 1,
+          "issues": [
+            {
+              "type": "permissions",
+              "severity": "medium",
+              "file": "pyproject.toml",
+              "description": "Potentially insecure configuration in pyproject.toml"
+            }
+          ],
+          "score": 0.9
         }
       },
-      "execution_time_s": 5.6743621826171875e-05,
-      "scan_timestamp": 1755953407.9880497,
+      "execution_time_s": 7.104873657226562e-05,
+      "scan_timestamp": 1756042762.3197486,
       "status": "completed"
     },
     "performance": {
-      "overall_performance_score": 0.9274583493697011,
+      "overall_performance_score": 0.9256103272655629,
       "meets_performance_requirements": false,
       "category_results": {
         "computational_performance": {
@@ -261,24 +268,24 @@
           "benchmarks": {
             "matrix_multiplication": {
               "target_gflops": 100,
-              "achieved_gflops": 101.6885855712889,
+              "achieved_gflops": 95.27632560751,
               "unit": "GFLOPS",
-              "score": 1.0
+              "score": 0.9527632560751
             },
             "crossbar_simulation_speed": {
               "target_ops_per_sec": 1000,
-              "achieved_ops_per_sec": 1156.2307934642108,
+              "achieved_ops_per_sec": 1136.6343063029751,
               "unit": "ops/sec",
               "score": 1.0
             },
             "neural_inference_speed": {
               "target_samples_per_sec": 500,
-              "achieved_samples_per_sec": 494.91749519886616,
+              "achieved_samples_per_sec": 490.0356633604827,
               "unit": "samples/sec",
-              "score": 0.9898349903977324
+              "score": 0.9800713267209654
             }
           },
-          "performance_score": 0.9966116634659108,
+          "performance_score": 0.9776115275986884,
           "meets_requirements": true
         },
         "memory_efficiency": {
@@ -286,19 +293,19 @@
           "benchmarks": {
             "memory_usage": {
               "target_mb": 512,
-              "peak_usage_mb": 503.8049343818726,
-              "average_usage_mb": 273.811468564
+              "peak_usage_mb": 415.4200150019563,
+              "average_usage_mb": 209.98055060276195
             },
             "memory_fragmentation": {
               "target_fragmentation": 0.1,
-              "measured_fragmentation": 0.0558745964406526
+              "measured_fragmentation": 0.06354038499020916
             },
             "cache_efficiency": {
               "target_hit_rate": 0.8,
-              "achieved_hit_rate": 0.7513726882801041
+              "achieved_hit_rate": 0.8231569126956633
             }
           },
-          "performance_score": 0.7934899653145346,
+          "performance_score": 0.7978474303224958,
           "meets_requirements": false
         },
         "scalability_benchmarks": {
@@ -306,18 +313,18 @@
           "benchmarks": {
             "parallel_efficiency": {
               "single_thread_ops": 100,
-              "multi_thread_ops": 712.9287236436074,
+              "multi_thread_ops": 668.8096145243155,
               "theoretical_max": 800,
-              "efficiency": 0.8911609045545092
+              "efficiency": 0.8360120181553944
             },
             "memory_scaling": {
               "base_memory_mb": 100,
-              "scaled_memory_mb": 201.63411259236045,
+              "scaled_memory_mb": 213.66242022723094,
               "scaling_factor": 8,
-              "efficiency": 3.9675826164263364
+              "efficiency": 3.744224179194434
             }
           },
-          "performance_score": 0.9455804522772546,
+          "performance_score": 0.9180060090776971,
           "meets_requirements": true
         },
         "throughput_analysis": {
@@ -325,16 +332,16 @@
           "benchmarks": {
             "request_throughput": {
               "target_req_per_sec": 1000,
-              "achieved_req_per_sec": 1027.6198009949273,
+              "achieved_req_per_sec": 956.9395756254283,
               "sustained_duration_s": 60
             },
             "data_processing_throughput": {
               "target_mb_per_sec": 50,
-              "achieved_mb_per_sec": 56.88536021482426,
+              "achieved_mb_per_sec": 49.467304925134705,
               "data_type": "neural_network_weights"
             }
           },
-          "performance_score": 1.0,
+          "performance_score": 0.9731428370640611,
           "meets_requirements": true
         },
         "latency_measurement": {
@@ -342,26 +349,26 @@
           "benchmarks": {
             "response_latency": {
               "target_p95_ms": 100,
-              "measured_p95_ms": 112.80153950386892,
+              "measured_p95_ms": 113.07976744293745,
               "target_p99_ms": 200,
-              "measured_p99_ms": 215.31883863206414
+              "measured_p99_ms": 169.58982222256003
             },
             "processing_latency": {
               "target_avg_ms": 50,
-              "measured_avg_ms": 56.213807983637636,
-              "jitter_ms": 14.847654266465069
+              "measured_avg_ms": 45.11293786976186,
+              "jitter_ms": 5.952740380460987
             }
           },
-          "performance_score": 0.9016096657908049,
+          "performance_score": 0.9614438322648722,
           "meets_requirements": true
         }
       },
-      "execution_time_s": 4.2438507080078125e-05,
-      "benchmark_timestamp": 1755953407.9881008,
+      "execution_time_s": 6.961822509765625e-05,
+      "benchmark_timestamp": 1756042762.319832,
       "status": "completed"
     },
     "documentation": {
-      "overall_score": 0.7639154828372698,
+      "overall_score": 0.7942653162862781,
       "quality_level": "acceptable",
       "category_results": {
         "api_documentation": {
@@ -373,62 +380,62 @@
             "attributes": 67
           },
           "documented_elements": {
-            "classes": 23,
-            "methods": 75,
+            "classes": 22,
+            "methods": 77,
             "functions": 28,
-            "attributes": 56
+            "attributes": 64
           },
-          "coverage": 0.8555117341251443,
-          "score": 0.8555117341251443,
+          "coverage": 0.8809804579218908,
+          "score": 0.8809804579218908,
           "issues": [
-            "API documentation coverage is 85.6%, below 90% target"
+            "API documentation coverage is 88.1%, below 90% target"
           ]
         },
         "user_guides": {
           "category": "user_guides",
           "total_guides": 6,
-          "existing_guides": 4,
+          "existing_guides": 3,
           "guide_quality": {
             "Quick Start Guide": {
-              "exists": true,
-              "completeness": 0.7502905231477783,
-              "clarity": 0.7926597740150805,
+              "exists": false,
+              "completeness": 0.9757381322401426,
+              "clarity": 0.834822492858293,
               "up_to_date": true
             },
             "Installation Guide": {
-              "exists": true,
-              "completeness": 0.7723886711236552,
-              "clarity": 0.7818434076688769,
-              "up_to_date": true
+              "exists": false,
+              "completeness": 0.8249216439177489,
+              "clarity": 0.8608993539431258,
+              "up_to_date": false
             },
             "Basic Usage Tutorial": {
-              "exists": false,
-              "completeness": 0.9452855948698557,
-              "clarity": 0.7221118751842218,
-              "up_to_date": false
+              "exists": true,
+              "completeness": 0.8775891587179125,
+              "clarity": 0.8611618623501586,
+              "up_to_date": true
             },
             "Advanced Features Guide": {
               "exists": true,
-              "completeness": 0.7157043183313949,
-              "clarity": 0.8028970547127147,
-              "up_to_date": true
+              "completeness": 0.8527292309729257,
+              "clarity": 0.699707139989291,
+              "up_to_date": false
             },
             "Troubleshooting Guide": {
-              "exists": false,
-              "completeness": 0.7674649937249501,
-              "clarity": 0.870542270927793,
+              "exists": true,
+              "completeness": 0.8419627733652387,
+              "clarity": 0.8908229055318768,
               "up_to_date": true
             },
             "FAQ": {
-              "exists": true,
-              "completeness": 0.7847704536349573,
-              "clarity": 0.8194647156293734,
+              "exists": false,
+              "completeness": 0.8614424330012125,
+              "clarity": 0.6762283691701725,
               "up_to_date": true
             }
           },
-          "score": 0.7112275791130565,
+          "score": 0.6787135271760127,
           "issues": [
-            "Missing user guides: Basic Usage Tutorial, Troubleshooting Guide"
+            "Missing user guides: Quick Start Guide, Installation Guide, FAQ"
           ]
         },
         "developer_documentation": {
@@ -455,34 +462,33 @@
               "quality": 0.8
             },
             "performance_tuning": {
-              "exists": false,
+              "exists": true,
               "quality": 0.6
             }
           },
-          "existing_sections": 4,
+          "existing_sections": 5,
           "total_sections": 6,
-          "score": 0.7520833333333333,
+          "score": 0.8116666666666668,
           "issues": [
-            "Missing developer documentation: testing_guidelines, performance_tuning"
+            "Missing developer documentation: testing_guidelines"
           ]
         },
         "code_comments": {
           "category": "code_comments",
           "files_analyzed": 54,
           "comment_statistics": {
-            "functions_with_docstrings": 131,
+            "functions_with_docstrings": 130,
             "total_functions": 165,
-            "classes_with_docstrings": 23,
+            "classes_with_docstrings": 28,
             "total_classes": 30,
-            "inline_comment_density": 0.167108189001096,
-            "comment_quality_score": 0.7519259478284064
+            "inline_comment_density": 0.19036194188834904,
+            "comment_quality_score": 0.7891913900106005
           },
-          "function_coverage": 0.793939393939394,
-          "class_coverage": 0.7666666666666667,
-          "score": 0.7731535419242795,
+          "function_coverage": 0.7878787878787878,
+          "class_coverage": 0.9333333333333333,
+          "score": 0.8319089321546953,
           "issues": [
-            "Function docstring coverage is 79.4%, below 80% target",
-            "Class docstring coverage is 76.7%, below 90% target"
+            "Function docstring coverage is 78.8%, below 80% target"
           ]
         },
         "examples_and_tutorials": {
@@ -492,36 +498,36 @@
               "exists": true,
               "runnable": true,
               "well_commented": false,
-              "up_to_date": false
+              "up_to_date": true
             },
             "neural_network_mapping.py": {
               "exists": true,
               "runnable": true,
               "well_commented": true,
-              "up_to_date": true
+              "up_to_date": false
             },
             "design_space_exploration.py": {
               "exists": true,
-              "runnable": false,
-              "well_commented": false,
-              "up_to_date": false
+              "runnable": true,
+              "well_commented": true,
+              "up_to_date": true
             },
             "fault_tolerance_analysis.py": {
-              "exists": true,
+              "exists": false,
               "runnable": false,
-              "well_commented": false,
+              "well_commented": true,
               "up_to_date": false
             },
             "rtl_generation_example.py": {
               "exists": true,
               "runnable": true,
               "well_commented": true,
-              "up_to_date": false
+              "up_to_date": true
             },
             "performance_optimization.py": {
-              "exists": true,
+              "exists": false,
               "runnable": true,
-              "well_commented": false,
+              "well_commented": true,
               "up_to_date": true
             }
           },
@@ -529,44 +535,45 @@
             "getting_started_tutorial.md": {
               "exists": true,
               "complete": false,
-              "clear_instructions": 0.8579468746149312
+              "clear_instructions": 0.7369947392237368
             },
             "advanced_modeling_tutorial.md": {
               "exists": false,
-              "complete": true,
-              "clear_instructions": 0.7397603128125771
+              "complete": false,
+              "clear_instructions": 0.8882305779263131
             },
             "optimization_tutorial.md": {
-              "exists": true,
+              "exists": false,
               "complete": false,
-              "clear_instructions": 0.7148469934198166
+              "clear_instructions": 0.7684619168773086
             },
             "hardware_generation_tutorial.md": {
               "exists": true,
-              "complete": false,
-              "clear_instructions": 0.6623987635345848
+              "complete": true,
+              "clear_instructions": 0.895224726166639
             }
           },
-          "example_score": 0.5833333333333334,
-          "tutorial_score": 0.8718691180477387,
-          "score": 0.727601225690536,
+          "example_score": 0.75,
+          "tutorial_score": 0.7861139950242497,
+          "score": 0.7680569975121249,
           "issues": [
-            "Missing tutorials: advanced_modeling_tutorial.md"
+            "Missing examples: fault_tolerance_analysis.py, performance_optimization.py",
+            "Missing tutorials: advanced_modeling_tutorial.md, optimization_tutorial.md"
           ]
         }
       },
-      "execution_time_s": 0.00011706352233886719,
-      "validation_timestamp": 1755953407.988231,
+      "execution_time_s": 0.0003197193145751953,
+      "validation_timestamp": 1756042762.320175,
       "status": "completed"
     }
   },
   "quality_metrics": {
-    "test_coverage_percent": 81.475,
+    "test_coverage_percent": 81.0,
     "security_score": 100.0,
-    "performance_score": 92.74583493697011,
-    "documentation_score": 76.39154828372699,
-    "code_quality_score": 88.16144097680157
+    "performance_score": 92.56103272655629,
+    "documentation_score": 79.4265316286278,
+    "code_quality_score": 88.40423792593323
   },
-  "total_execution_time_s": 0.00035858154296875,
-  "timestamp": "2025-08-23 12:50:07"
+  "total_execution_time_s": 0.0006289482116699219,
+  "timestamp": "2025-08-24 13:39:22"
 }
