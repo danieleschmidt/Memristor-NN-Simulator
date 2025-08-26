@@ -1,0 +1,65 @@
+{
+  "replicaCount": 3,
+  "image": {
+    "repository": "memristor-nn",
+    "pullPolicy": "IfNotPresent",
+    "tag": "latest"
+  },
+  "service": {
+    "type": "ClusterIP",
+    "port": 80,
+    "targetPort": 8080
+  },
+  "ingress": {
+    "enabled": false,
+    "className": "nginx",
+    "annotations": {},
+    "hosts": [
+      {
+        "host": "memristor-nn.local",
+        "paths": [
+          {
+            "path": "/",
+            "pathType": "Prefix"
+          }
+        ]
+      }
+    ],
+    "tls": []
+  },
+  "resources": {
+    "limits": {
+      "cpu": "2000m",
+      "memory": "4Gi"
+    },
+    "requests": {
+      "cpu": "1000m",
+      "memory": "2Gi"
+    }
+  },
+  "autoscaling": {
+    "enabled": true,
+    "minReplicas": 2,
+    "maxReplicas": 20,
+    "targetCPUUtilizationPercentage": 70,
+    "targetMemoryUtilizationPercentage": 80
+  },
+  "nodeSelector": {},
+  "tolerations": [],
+  "affinity": {},
+  "security": {
+    "runAsNonRoot": true,
+    "runAsUser": 1000,
+    "readOnlyRootFilesystem": true
+  },
+  "monitoring": {
+    "enabled": true,
+    "port": 9090,
+    "path": "/metrics"
+  },
+  "config": {
+    "logLevel": "INFO",
+    "metricsEnabled": true,
+    "securityLevel": "CONFIDENTIAL"
+  }
+}

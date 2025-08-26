@@ -1,0 +1,20 @@
+{
+  "apiVersion": "v2",
+  "name": "memristor-nn",
+  "description": "Memristor Neural Network Simulator",
+  "type": "application",
+  "version": "1.0.0",
+  "appVersion": "1.0.0",
+  "keywords": [
+    "neural-network",
+    "memristor",
+    "simulation",
+    "ai"
+  ],
+  "maintainers": [
+    {
+      "name": "Terragon Labs",
+      "email": "info@terragonlabs.com"
+    }
+  ]
+}
