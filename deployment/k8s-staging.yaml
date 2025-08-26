@@ -1,0 +1,297 @@
+---
+# Namespace
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: memristor-nn-staging
+  labels:
+    app: memristor-nn
+    environment: staging
+
+---
+# ConfigMap for application configuration
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: memristor-nn-config
+  namespace: memristor-nn-staging
+data:
+  ENVIRONMENT: staging
+  LOG_LEVEL: INFO
+  METRICS_ENABLED: "true"
+  SECURITY_LEVEL: CONFIDENTIAL
+  SIMULATION_WORKERS: "4"
+  CACHE_SIZE_MB: "512"
+
+---
+# Secret for sensitive configuration
+apiVersion: v1
+kind: Secret
+metadata:
+  name: memristor-nn-secrets
+  namespace: memristor-nn-staging
+type: Opaque
+data:
+  # Base64 encoded values (replace with actual secrets)
+  database-password: cGFzc3dvcmQxMjM=
+  api-key: YXBpLWtleS0xMjM0NTY=
+  jwt-secret: and0LXNlY3JldC1rZXktMTIzNDU2Nzg5MA==
+
+---
+# Deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: memristor-nn
+  namespace: memristor-nn-staging
+  labels:
+    app: memristor-nn
+    environment: staging
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: memristor-nn
+      environment: staging
+  template:
+    metadata:
+      labels:
+        app: memristor-nn
+        environment: staging
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "8080"
+        prometheus.io/path: "/metrics"
+    spec:
+      serviceAccountName: memristor-nn
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        fsGroup: 1000
+      containers:
+      - name: memristor-nn
+        image: memristor-nn:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8080
+          name: http
+        - containerPort: 8443
+          name: https
+        - containerPort: 9090
+          name: metrics
+        env:
+        - name: ENVIRONMENT
+          valueFrom:
+            configMapKeyRef:
+              name: memristor-nn-config
+              key: ENVIRONMENT
+        - name: LOG_LEVEL
+          valueFrom:
+            configMapKeyRef:
+              name: memristor-nn-config
+              key: LOG_LEVEL
+        - name: DATABASE_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: memristor-nn-secrets
+              key: database-password
+        - name: API_KEY
+          valueFrom:
+            secretKeyRef:
+              name: memristor-nn-secrets
+              key: api-key
+        resources:
+          requests:
+            cpu: 750m
+            memory: 1.5Gi
+          limits:
+            cpu: 1500m
+            memory: 3Gi
+        readinessProbe:
+          httpGet:
+            path: /health/ready
+            port: 8080
+          initialDelaySeconds: 30
+          periodSeconds: 10
+          timeoutSeconds: 5
+          failureThreshold: 3
+        livenessProbe:
+          httpGet:
+            path: /health/live
+            port: 8080
+          initialDelaySeconds: 60
+          periodSeconds: 20
+          timeoutSeconds: 5
+          failureThreshold: 3
+        securityContext:
+          allowPrivilegeEscalation: false
+          readOnlyRootFilesystem: true
+          capabilities:
+            drop:
+            - ALL
+        volumeMounts:
+        - name: tmp-volume
+          mountPath: /tmp
+        - name: cache-volume
+          mountPath: /app/cache
+      volumes:
+      - name: tmp-volume
+        emptyDir: {}
+      - name: cache-volume
+        emptyDir:
+          sizeLimit: 1Gi
+
+---
+# Service
+apiVersion: v1
+kind: Service
+metadata:
+  name: memristor-nn-service
+  namespace: memristor-nn-staging
+  labels:
+    app: memristor-nn
+    environment: staging
+  annotations:
+    service.beta.kubernetes.io/aws-load-balancer-type: "nlb"
+spec:
+  selector:
+    app: memristor-nn
+    environment: staging
+  ports:
+  - name: http
+    port: 80
+    targetPort: 8080
+    protocol: TCP
+  - name: https  
+    port: 443
+    targetPort: 8443
+    protocol: TCP
+  - name: metrics
+    port: 9090
+    targetPort: 9090
+    protocol: TCP
+  type: ClusterIP
+
+---
+# ServiceAccount
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: memristor-nn
+  namespace: memristor-nn-staging
+  labels:
+    app: memristor-nn
+    environment: staging
+
+---
+# Role for application permissions
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: memristor-nn-role
+  namespace: memristor-nn-staging
+rules:
+- apiGroups: [""]
+  resources: ["configmaps", "secrets"]
+  verbs: ["get", "list", "watch"]
+- apiGroups: [""]
+  resources: ["pods"]
+  verbs: ["get", "list", "watch"]
+
+---
+# RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: memristor-nn-rolebinding
+  namespace: memristor-nn-staging
+subjects:
+- kind: ServiceAccount
+  name: memristor-nn
+  namespace: memristor-nn-staging
+roleRef:
+  kind: Role
+  name: memristor-nn-role
+  apiGroup: rbac.authorization.k8s.io
+
+---
+# Horizontal Pod Autoscaler
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: memristor-nn-hpa
+  namespace: memristor-nn-staging
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: memristor-nn
+  minReplicas: 2
+  maxReplicas: 10
+  metrics:
+  - type: Resource
+    resource:
+      name: cpu
+      target:
+        type: Utilization
+        averageUtilization: 70
+  - type: Resource
+    resource:
+      name: memory
+      target:
+        type: Utilization
+        averageUtilization: 80
+  behavior:
+    scaleDown:
+      stabilizationWindowSeconds: 300
+      policies:
+      - type: Percent
+        value: 50
+        periodSeconds: 60
+    scaleUp:
+      stabilizationWindowSeconds: 60
+      policies:
+      - type: Percent
+        value: 100
+        periodSeconds: 15
+
+---
+# Network Policy for security
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: memristor-nn-netpol
+  namespace: memristor-nn-staging
+spec:
+  podSelector:
+    matchLabels:
+      app: memristor-nn
+  policyTypes:
+  - Ingress
+  - Egress
+  ingress:
+  - from:
+    - namespaceSelector:
+        matchLabels:
+          name: ingress-nginx
+    - namespaceSelector:
+        matchLabels:
+          name: monitoring
+    ports:
+    - protocol: TCP
+      port: 8080
+    - protocol: TCP
+      port: 9090
+  egress:
+  - to: []
+    ports:
+    - protocol: TCP
+      port: 53
+    - protocol: UDP
+      port: 53
+  - to: []
+    ports:
+    - protocol: TCP
+      port: 443
+    - protocol: TCP
+      port: 80
