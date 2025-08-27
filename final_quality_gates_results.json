@@ -1,0 +1,47 @@
+{
+  "timestamp": 1756261349.3396142,
+  "tests": [
+    {
+      "name": "SimpleMemristor",
+      "status": "PASS"
+    },
+    {
+      "name": "Matrix",
+      "status": "PASS"
+    },
+    {
+      "name": "OptimizedCache",
+      "status": "PASS"
+    },
+    {
+      "name": "ScalableArray",
+      "status": "PASS"
+    },
+    {
+      "name": "EndToEnd",
+      "status": "PASS"
+    },
+    {
+      "name": "Performance",
+      "status": "PASS",
+      "latency_ms": 0.0171661376953125,
+      "throughput": 45003.26180257511
+    },
+    {
+      "name": "Security",
+      "status": "WARNING",
+      "issues": 2
+    }
+  ],
+  "quality_metrics": {
+    "test_coverage": 85.71428571428571,
+    "coverage_target": 85.0,
+    "coverage_met": true,
+    "passed_tests": 6,
+    "total_tests": 7,
+    "critical_failures": 0,
+    "no_critical_failures": true,
+    "quality_gates_passed": true
+  },
+  "overall_status": "PASS"
+}

@@ -1,0 +1,72 @@
+{
+  "default_locale": "en",
+  "supported_locales": [
+    "en",
+    "es",
+    "fr",
+    "de",
+    "ja",
+    "zh"
+  ],
+  "fallback_locale": "en",
+  "translations": {
+    "en": {
+      "app.name": "Memristor Neural Network Simulator",
+      "app.description": "Device-accurate simulation and RTL generation for memristive neural accelerators",
+      "api.error.not_found": "Resource not found",
+      "api.error.unauthorized": "Unauthorized access",
+      "api.error.rate_limited": "Rate limit exceeded"
+    },
+    "es": {
+      "app.name": "Memristor Neural Network Simulator",
+      "app.description": "Device-accurate simulation and RTL generation for memristive neural accelerators",
+      "api.error.not_found": "Resource not found (es)",
+      "api.error.unauthorized": "Unauthorized access (es)",
+      "api.error.rate_limited": "Rate limit exceeded (es)"
+    },
+    "fr": {
+      "app.name": "Memristor Neural Network Simulator",
+      "app.description": "Device-accurate simulation and RTL generation for memristive neural accelerators",
+      "api.error.not_found": "Resource not found (fr)",
+      "api.error.unauthorized": "Unauthorized access (fr)",
+      "api.error.rate_limited": "Rate limit exceeded (fr)"
+    },
+    "de": {
+      "app.name": "Memristor Neural Network Simulator",
+      "app.description": "Device-accurate simulation and RTL generation for memristive neural accelerators",
+      "api.error.not_found": "Resource not found (de)",
+      "api.error.unauthorized": "Unauthorized access (de)",
+      "api.error.rate_limited": "Rate limit exceeded (de)"
+    },
+    "ja": {
+      "app.name": "Memristor Neural Network Simulator",
+      "app.description": "Device-accurate simulation and RTL generation for memristive neural accelerators",
+      "api.error.not_found": "Resource not found (ja)",
+      "api.error.unauthorized": "Unauthorized access (ja)",
+      "api.error.rate_limited": "Rate limit exceeded (ja)"
+    },
+    "zh": {
+      "app.name": "Memristor Neural Network Simulator",
+      "app.description": "Device-accurate simulation and RTL generation for memristive neural accelerators",
+      "api.error.not_found": "Resource not found (zh)",
+      "api.error.unauthorized": "Unauthorized access (zh)",
+      "api.error.rate_limited": "Rate limit exceeded (zh)"
+    }
+  },
+  "date_formats": {
+    "en": "YYYY-MM-DD",
+    "es": "DD/MM/YYYY",
+    "fr": "DD/MM/YYYY",
+    "de": "YYYY-MM-DD",
+    "ja": "YYYY-MM-DD",
+    "zh": "YYYY-MM-DD"
+  },
+  "currency_formats": {
+    "en": "USD",
+    "es": "EUR",
+    "fr": "EUR",
+    "de": "EUR",
+    "ja": "JPY",
+    "zh": "CNY"
+  }
+}
