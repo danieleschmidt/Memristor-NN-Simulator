@@ -1,0 +1,70 @@
+{
+  "prometheus": {
+    "scrape_configs": [
+      {
+        "job_name": "memristor-nn-simulator",
+        "static_configs": [
+          {
+            "targets": [
+              "memristor-nn-simulator:8080"
+            ]
+          }
+        ],
+        "metrics_path": "/metrics",
+        "scrape_interval": "15s"
+      }
+    ]
+  },
+  "grafana": {
+    "dashboards": {
+      "memristor-nn-simulator_dashboard": {
+        "title": "memristor-nn-simulator Production Dashboard",
+        "panels": [
+          "request_rate",
+          "response_time",
+          "error_rate",
+          "cpu_utilization",
+          "memory_usage",
+          "active_connections"
+        ]
+      }
+    }
+  },
+  "alerts": {
+    "rules": [
+      {
+        "alert": "HighErrorRate",
+        "expr": "rate(http_requests_total{job='memristor-nn-simulator',status=~'5..'}[5m]) > 0.1",
+        "for": "2m",
+        "labels": {
+          "severity": "critical"
+        },
+        "annotations": {
+          "summary": "High error rate detected",
+          "description": "Error rate is above 10% for 2 minutes"
+        }
+      },
+      {
+        "alert": "HighLatency",
+        "expr": "histogram_quantile(0.95, rate(http_request_duration_seconds_bucket{job='memristor-nn-simulator'}[5m])) > 1.0",
+        "for": "5m",
+        "labels": {
+          "severity": "warning"
+        },
+        "annotations": {
+          "summary": "High latency detected",
+          "description": "95th percentile latency is above 1 second"
+        }
+      }
+    ]
+  },
+  "logging": {
+    "level": "info",
+    "format": "json",
+    "outputs": [
+      "stdout",
+      "file"
+    ],
+    "retention_days": 30
+  }
+}

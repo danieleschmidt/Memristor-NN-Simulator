@@ -1,0 +1,99 @@
+{
+  "terraform": {
+    "required_version": ">= 1.0"
+  },
+  "provider": {
+    "aws": {
+      "version": "~> 5.0",
+      "region": "us-east-1"
+    }
+  },
+  "resource": {
+    "aws_ecs_cluster": {
+      "memristor-nn-simulator_cluster": {
+        "name": "memristor-nn-simulator-production",
+        "capacity_providers": [
+          "FARGATE",
+          "FARGATE_SPOT"
+        ],
+        "setting": {
+          "name": "containerInsights",
+          "value": "enabled"
+        }
+      }
+    },
+    "aws_ecs_service": {
+      "memristor-nn-simulator_service": {
+        "name": "memristor-nn-simulator-service",
+        "cluster": "${aws_ecs_cluster.memristor-nn-simulator_cluster.id}",
+        "task_definition": "${aws_ecs_task_definition.memristor-nn-simulator_task.arn}",
+        "desired_count": 3,
+        "launch_type": "FARGATE",
+        "network_configuration": {
+          "subnets": [
+            "${aws_subnet.private.*.id}"
+          ],
+          "security_groups": [
+            "${aws_security_group.app.id}"
+          ],
+          "assign_public_ip": false
+        },
+        "load_balancer": {
+          "target_group_arn": "${aws_lb_target_group.app.arn}",
+          "container_name": "memristor-nn-simulator",
+          "container_port": 8080
+        }
+      }
+    },
+    "aws_cloudfront_distribution": {
+      "memristor-nn-simulator_cdn": {
+        "enabled": true,
+        "price_class": "PriceClass_All",
+        "origin": {
+          "domain_name": "${aws_lb.main.dns_name}",
+          "origin_id": "memristor-nn-simulator-origin",
+          "custom_origin_config": {
+            "http_port": 80,
+            "https_port": 443,
+            "origin_protocol_policy": "https-only",
+            "origin_ssl_protocols": [
+              "TLSv1.2"
+            ]
+          }
+        },
+        "default_cache_behavior": {
+          "target_origin_id": "memristor-nn-simulator-origin",
+          "viewer_protocol_policy": "redirect-to-https",
+          "allowed_methods": [
+            "GET",
+            "HEAD",
+            "OPTIONS",
+            "PUT",
+            "PATCH",
+            "POST",
+            "DELETE"
+          ],
+          "cached_methods": [
+            "GET",
+            "HEAD"
+          ],
+          "forwarded_values": {
+            "query_string": true,
+            "headers": [
+              "Authorization",
+              "CloudFront-Forwarded-Proto"
+            ]
+          }
+        },
+        "restrictions": {
+          "geo_restriction": {
+            "restriction_type": "none"
+          }
+        },
+        "viewer_certificate": {
+          "cloudfront_default_certificate": true
+        }
+      }
+    }
+  }
+}
