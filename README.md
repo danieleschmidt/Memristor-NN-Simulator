@@ -1,326 +1,192 @@
-# Memristor-NN-Simulator 🔌🧠
+# Memristor-NN-Simulator
 
-[![Python](https://img.shields.io/badge/Python-3.9+-blue.svg)](https://python.org)
-[![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.XXXXXX.svg)](https://doi.org/10.5281/zenodo.XXXXXX)
-[![ScienceDirect](https://img.shields.io/badge/Paper-ScienceDirect-orange)](https://sciencedirect.com)
+A physics-based simulator for **memristive crossbar neural networks** — modeling how resistive switching devices can implement neural network inference in analog hardware.
 
-Device-accurate simulator and RTL generator for memristive crossbar accelerators, featuring IEDM 2024 calibrated noise models.
+## What This Is
 
-## 🎯 Key Features
+Memristors are two-terminal resistive devices that retain their resistance state after power is removed. A crossbar array of memristors implements **matrix-vector multiplication (VMM) in a single analog step** using Ohm's law and Kirchhoff's current law:
 
-- **Device-Accurate Modeling**: Physics-based memristor models calibrated with IEDM 2024 datasets
-- **Fault Injection**: Comprehensive stuck-at-fault and drift models
-- **RTL Generation**: Automated Verilog/Chisel generation for ASIC/FPGA deployment
-- **Design Space Exploration**: Power/latency/accuracy Pareto frontier analysis
-- **Neural Network Mapping**: Automated mapping of PyTorch/TensorFlow models to crossbar arrays
+```
+I = G · V
+```
 
-## 🚀 Quick Start
+where **G** is the conductance matrix (stored as device states), **V** is the input voltage vector, and **I** is the output current — the result of the multiply-accumulate operation. This is the core of a fully-connected neural network layer, executed in O(1) time in analog hardware.
 
-### Installation
+This simulator models that hardware at the device, circuit, and system level — complete with realistic noise models, differential weight encoding, and energy estimation.
+
+---
+
+## Architecture
+
+```
+MemristorDevice        → single device physics (Ron/Roff, switching, noise)
+    └── CrossbarArray  → NxM grid, analog VMM I=G·V
+        └── MemristiveLayer  → weight mapping + differential crossbar pair
+            └── MemristiveNN → stacked layers + activations (full MLP)
+                └── EnergyModel → power = V²×G, energy per inference
+```
+
+---
+
+## Physics
+
+### Device Model (`MemristorDevice`)
+
+Each memristor has:
+- **Ron** (low-resistance state, LRS): ~10 kΩ — device is "on" (conducting)
+- **Roff** (high-resistance state, HRS): ~1 MΩ — device is "off" (insulating)
+- **State variable** `w ∈ [0, 1]`: models internal boundary (e.g., oxygen vacancy front in TaOx)
+- **Conductance**: `G = G_off + w × (G_on - G_off)`
+- **Switching**: non-linear sigmoid response to applied voltage vs. `V_write` threshold
+- **Noise**: device-to-device variation (log-normal σ) + cycle-to-cycle read noise (Gaussian)
+
+### Crossbar VMM (`CrossbarArray`)
+
+```
+Word-lines (rows) ——→ [G00][G01][G02]
+                  ——→ [G10][G11][G12]
+                  ——→ [G20][G21][G22]
+                         ↓   ↓   ↓
+                    Bit-lines (cols)  →  output currents I
+```
+
+Each column sums currents via KCL: `I_j = Σ_i G_ij · V_i`
+
+### Weight Encoding (`MemristiveLayer`)
+
+Weights W ∈ ℝ can be negative; conductances are ≥ 0. We use a **differential pair**:
+
+```
+G_pos = max(W_norm, 0) × (G_on - G_off) + G_off
+G_neg = max(-W_norm, 0) × (G_on - G_off) + G_off
+Output = (G_pos · x) - (G_neg · x)
+```
+
+This cancels common-mode offsets and correctly handles sign.
+
+### Energy (`EnergyModel`)
+
+During a read pulse of duration `T_read`, each device dissipates:
+```
+P_ij = V_i² × G_ij   (Watts)
+E_xbar = T_read × Σ_ij P_ij   (Joules)
+```
+
+Peripheral circuit overhead (ADC, DAC, digital activation) adds a multiplier (default 3×).
+
+---
+
+## Installation
 
 ```bash
-# Basic installation
-pip install memristor-nn-sim
-
-# With RTL generation support
-pip install memristor-nn-sim[rtl]
-
-# Development installation
-git clone https://github.com/yourusername/Memristor-NN-Simulator.git
+git clone https://github.com/danieleschmidt/Memristor-NN-Simulator
 cd Memristor-NN-Simulator
-pip install -e ".[dev,rtl]"
+pip install numpy   # only dependency
 ```
 
-### Basic Usage
+---
+
+## Quickstart
 
 ```python
-import memristor_nn as mn
-import torch.nn as nn
+import numpy as np
+from memristor_nn import MemristorDevice, CrossbarArray, MemristiveNN, EnergyModel
 
-# Define a simple neural network
-model = nn.Sequential(
-    nn.Linear(784, 256),
-    nn.ReLU(),
-    nn.Linear(256, 10)
-)
+# Single device
+d = MemristorDevice(ron=1e4, roff=1e6, v_write=1.0)
+d.write_voltage(2.0)   # SET → low-resistance state
+print(d)               # MemristorDevice(G=99.67 µS, w=0.997, ...)
 
-# Create memristor crossbar mapping
-crossbar = mn.CrossbarArray(
-    rows=784,
-    cols=256,
-    device_model='IEDM2024_TaOx',
-    tile_size=128
-)
+# Crossbar analog VMM
+xb = CrossbarArray(4, 3)
+v_in = np.array([0.1, 0.2, 0.15, 0.05])
+i_out = xb.vmm(v_in, noisy=True)  # includes device noise
 
-# Map neural network to crossbar
-mapped_model = mn.map_to_crossbar(model, crossbar)
+# Full network
+net = MemristiveNN([32, 64, 4], activation="relu")
+net.load_weights(weight_matrices, bias_vectors)
+logits = net.forward(x_test, noisy=True)
 
-# Simulate with device variations
-results = mn.simulate(
-    mapped_model,
-    test_data,
-    include_noise=True,
-    temperature=300  # Kelvin
-)
-
-print(f"Accuracy with device variations: {results.accuracy:.2%}")
-print(f"Energy per inference: {results.energy_pj:.2f} pJ")
+# Energy estimate
+em = EnergyModel(t_read=10e-9)
+energy = em.estimate(net, x_test[0])
+print(f"{energy['total_energy_nj']:.4f} nJ per inference")
 ```
 
-## 🏗️ Architecture
+---
 
-### Core Components
+## Demo
 
-```
-memristor-nn-simulator/
-├── devices/           # Memristor device models
-│   ├── models/       # Physics-based models (TaOx, HfOx, etc.)
-│   ├── calibration/  # IEDM 2024 dataset calibration
-│   └── faults/       # Fault injection models
-├── mapping/          # NN to crossbar mapping algorithms
-│   ├── tile_mapper.py
-│   ├── weight_encoding.py
-│   └── pipeline_optimizer.py
-├── simulator/        # Cycle-accurate simulation
-│   ├── analog_compute.py
-│   ├── peripheral_circuits.py
-│   └── power_models.py
-├── rtl_gen/         # Hardware generation
-│   ├── verilog/
-│   ├── chisel/
-│   └── constraints/
-└── analysis/        # Design space exploration
-    ├── pareto.py
-    ├── sensitivity.py
-    └── visualization.py
-```
-
-## 🔬 Device Models
-
-### Supported Memristor Technologies
-
-| Technology | Ron/Roff | Switching Time | Endurance | Model Source |
-|------------|----------|----------------|-----------|--------------|
-| TaOx/TaOy | 10⁴-10⁶ | 10-50 ns | 10¹² | IEDM 2024 |
-| HfOx | 10³-10⁵ | 5-20 ns | 10⁹ | IEDM 2024 |
-| PCMO | 10²-10⁴ | 100-500 ns | 10⁸ | Nature 2023 |
-| Ag/Si | 10⁵-10⁷ | 1-10 ns | 10¹⁰ | IEEE EDL 2024 |
-
-### Noise and Variation Models
-
-```python
-# Configure device variations
-device_config = mn.DeviceConfig(
-    # Cycle-to-cycle variations
-    read_noise_sigma=0.05,      # 5% read noise
-    
-    # Device-to-device variations
-    ron_variation=0.15,         # 15% Ron variation
-    roff_variation=0.20,        # 20% Roff variation
-    
-    # Temporal drift
-    drift_coefficient=0.1,      # Drift over time
-    
-    # Stuck-at faults
-    stuck_at_rate=0.001,        # 0.1% stuck devices
-    
-    # Temperature effects
-    temp_coefficient=0.002      # 0.2%/K
-)
-```
-
-## ⚡ RTL Generation
-
-### Verilog Generation
-
-```python
-# Generate synthesizable Verilog
-rtl_gen = mn.RTLGenerator(
-    target='ASIC',
-    technology='28nm',
-    frequency=1000  # MHz
-)
-
-verilog_files = rtl_gen.generate_verilog(
-    mapped_model,
-    output_dir='./rtl_output',
-    include_testbench=True
-)
-
-# Generate constraints
-constraints = rtl_gen.generate_constraints(
-    power_budget=100,  # mW
-    area_budget=2.0    # mm²
-)
-```
-
-### Chisel Generation
-
-```python
-# Generate Chisel for advanced RISC-V integration
-chisel_gen = mn.ChiselGenerator(
-    interface='AXI4',
-    data_width=256
-)
-
-chisel_modules = chisel_gen.generate(
-    mapped_model,
-    include_dma=True,
-    include_scheduler=True
-)
-```
-
-## 📊 Design Space Exploration
-
-### Pareto Analysis
-
-```python
-# Explore power-latency-accuracy tradeoffs
-explorer = mn.DesignSpaceExplorer(
-    model=model,
-    dataset=dataset,
-    metrics=['power', 'latency', 'accuracy', 'area']
-)
-
-# Define design parameters to explore
-param_space = {
-    'tile_size': [64, 128, 256],
-    'adc_precision': [4, 6, 8],
-    'device_technology': ['TaOx', 'HfOx'],
-    'peripheral_optimization': ['baseline', 'low_power', 'high_perf']
-}
-
-# Run exploration
-results = explorer.explore(param_space, n_samples=1000)
-
-# Visualize Pareto frontier
-explorer.plot_pareto_3d(
-    x='power_mw',
-    y='latency_us', 
-    z='accuracy',
-    color='area_mm2'
-)
-```
-
-## 🧪 Validation & Testing
-
-### Hardware Validation
-
-```python
-# Compare with measured silicon data
-validator = mn.HardwareValidator(
-    measured_data='./silicon_measurements.csv',
-    confidence_level=0.95
-)
-
-validation_report = validator.validate(
-    simulated_results,
-    metrics=['power', 'latency', 'bit_error_rate']
-)
-```
-
-### Unit Tests
+Run the full demo — trains a 2-layer MLP, loads weights onto simulated crossbars, compares accuracy, and estimates energy:
 
 ```bash
-# Run all tests
-pytest tests/
-
-# Run specific test categories
-pytest tests/devices/
-pytest tests/mapping/
-pytest tests/rtl_gen/
-
-# Run with coverage
-pytest --cov=memristor_nn tests/
+python examples/demo_mlp.py
 ```
 
-## 📈 Benchmarks
+**Expected output:**
+```
+[1] Single Memristor Device
+  After +2V: G=99.67 µS, w=0.997
+  After -2V: G=1.66 µS, w=0.007
 
-### Performance Comparison
+[5] Accuracy Comparison
+  Software MLP (float64)                       1.000
+  Memristive NN (noiseless crossbar)           1.000
+  Memristive NN (noisy, σ_d2d=5%, σ_read=2%)  1.000
 
-| Network | Technology | Crossbar Size | Power (mW) | Latency (μs) | Accuracy |
-|---------|------------|---------------|------------|--------------|----------|
-| LeNet-5 | TaOx | 128×128 | 2.3 | 0.8 | 98.2% |
-| ResNet-18 | HfOx | 256×256 | 45.6 | 12.4 | 89.7% |
-| BERT-Base | TaOx | 512×512 | 234.5 | 156.2 | 91.3% |
-
-## 🛠️ Advanced Features
-
-### Custom Device Models
-
-```python
-# Define custom memristor model
-class MyMemristor(mn.DeviceModel):
-    def __init__(self):
-        super().__init__()
-        self.ron = 1e4    # Ohms
-        self.roff = 1e7   # Ohms
-        
-    def conductance(self, voltage, state):
-        # Implement I-V characteristics
-        return custom_iv_model(voltage, state)
-    
-    def update_state(self, voltage, time):
-        # Implement state dynamics
-        return new_state
-
-# Register custom model
-mn.register_device('MyDevice', MyMemristor)
+[6] Energy Estimate
+  Total MACs:               2304
+  Crossbar energy:          0.0140 nJ
+  Total energy (w/ periph): 0.0421 nJ
 ```
 
-### Fault Injection Campaigns
+---
 
-```python
-# Run comprehensive fault analysis
-fault_analyzer = mn.FaultAnalyzer(mapped_model)
+## Tests
 
-fault_results = fault_analyzer.inject_faults(
-    fault_types=['stuck_at_on', 'stuck_at_off', 'drift'],
-    fault_rates=np.logspace(-4, -1, 20),
-    n_trials=100
-)
-
-fault_analyzer.plot_reliability_curves(fault_results)
+```bash
+python -m pytest tests/ -v
+# 39 passed
 ```
 
-## 📚 Publications
+---
 
-If you use this simulator in your research, please cite:
+## Module Reference
 
-```bibtex
-@software{memristor_nn_sim2025,
-  title={Memristor-NN-Simulator: Device-Accurate Simulation and RTL Generation for Memristive Neural Accelerators},
-  author={Daniel Schmidt},
-  year={2025},
-  url={https://github.com/danieleschmidt/Memristor-NN-Simulator}
-}
+| Module | Class | Description |
+|--------|-------|-------------|
+| `device.py` | `MemristorDevice` | Single device physics, switching, noise |
+| `crossbar.py` | `CrossbarArray` | NxM crossbar, conductance matrix, VMM |
+| `layers.py` | `MemristiveLayer` | Differential crossbar pair, weight mapping |
+| `network.py` | `MemristiveNN` | Full MLP on crossbars + activations |
+| `network.py` | `SoftwareMLP` | Reference software MLP (numpy, no crossbar) |
+| `energy.py` | `EnergyModel` | Per-inference energy estimation |
 
-@inproceedings{iedm2024calibration,
-  title={Comprehensive Calibration of Memristor Models using IEDM 2024 Datasets},
-  author={Device Team},
-  booktitle={IEDM},
-  year={2024}
-}
-```
+---
 
-## 🤝 Contributing
+## Why Memristors?
 
-We welcome contributions! See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
+| Property | CMOS SRAM | Memristor |
+|----------|-----------|-----------|
+| Compute paradigm | Digital, serial | Analog, parallel |
+| VMM complexity | O(N²) ops | O(1) analog |
+| Non-volatility | No | Yes |
+| Energy/MAC | ~1–10 fJ | Potentially 0.01–1 fJ |
+| Area | Larger | Denser (4F² cell) |
 
-### Areas of Interest:
-- New device models and calibration data
-- Advanced mapping algorithms
-- RTL optimization techniques
-- Fault tolerance mechanisms
+The catch: analog noise degrades precision (typically 4–8 effective bits). This simulator helps quantify that tradeoff.
 
-## 📄 License
+---
 
-This project is licensed under the MIT License - see [LICENSE](LICENSE) for details.
+## References
 
-## 🔗 Resources
+- Prezioso et al., "Training and operation of an integrated neuromorphic network based on metal-oxide memristors," *Nature* 521, 61–64 (2015)
+- Yao et al., "Fully hardware-implemented memristor convolutional neural network," *Nature* 577, 641–646 (2020)
+- Waser & Aono, "Nanoionics-based resistive switching memories," *Nature Materials* 6, 833–840 (2007)
+- Strukov et al., "The missing memristor found," *Nature* 453, 80–83 (2008)
 
-- [Documentation](https://memristor-nn-sim.readthedocs.io)
-- [Tutorial Notebooks](./notebooks)
-- [Hardware Design Files](./hardware)
-- [IEDM 2024 Dataset](https://doi.org/10.5281/zenodo.XXXXXX)
+---
+
+## License
+
+MIT
